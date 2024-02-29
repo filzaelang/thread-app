@@ -1,0 +1,48 @@
+{
+    "threads": [
+        {
+            "id": 1,
+            "picture": "https://img.freepik.com/free-photo/image-young-asian-business-woman-female-entrepreneur-glasses-holding-tablet-looking-professional-glasses-white-background_1258-89375.jpg?w=826&t=st=1707196391~exp=1707196991~hmac=82103932db23d9f0edbc667a8e9721e10323dd24debd51e299d14377f314ffae",
+            "fullName": "John Doe",
+            "username": "john_doe",
+            "image": "",
+            "content": "Some content",
+            "posted_at": "2022-01-01",
+            "likes_count": 10,
+            "replies_count": 5
+        },
+        {
+            "id": 2,
+            "picture": "https://img.freepik.com/free-photo/lifestyle-people-emotions-casual-concept-confident-nice-smiling-asian-woman-cross-arms-chest-confident-ready-help-listening-coworkers-taking-part-conversation_1258-59335.jpg?w=826&t=st=1707196428~exp=1707197028~hmac=cd9b118f2f1d16f382b398e0b84efa76100f29d04a381136c32b0e66b9f91186",
+            "fullName": "John Doe",
+            "username": "john_doe",
+            "image": "",
+            "content": "Some content",
+            "posted_at": "2022-01-01",
+            "likes_count": 10,
+            "replies_count": 5
+        },
+        {
+            "id": 3,
+            "picture": "https://img.freepik.com/free-photo/lifestyle-people-emotions-casual-concept-confident-nice-smiling-asian-woman-cross-arms-chest-confident-ready-help-listening-coworkers-taking-part-conversation_1258-59335.jpg?w=826&t=st=1707196428~exp=1707197028~hmac=cd9b118f2f1d16f382b398e0b84efa76100f29d04a381136c32b0e66b9f91186",
+            "fullName": "Bayu",
+            "username": "bayu321",
+            "image": "https://img.freepik.com/free-photo/sunrise-bali-jungle_1385-1644.jpg?w=826&t=st=1707282002~exp=1707282602~hmac=0163b1d13c7fe434d03619aa8f2a911155e8a1fd6c39810c9385fc142ec8f882",
+            "content": "Jalan-jalan skuy",
+            "posted_at": "2022-01-01",
+            "likes_count": 10,
+            "replies_count": 5
+        },
+        {
+            "id": 4,
+            "picture": "https://img.freepik.com/free-photo/image-young-asian-business-woman-female-entrepreneur-glasses-holding-tablet-looking-professional-glasses-white-background_1258-89375.jpg?w=826&t=st=1707196391~exp=1707196991~hmac=82103932db23d9f0edbc667a8e9721e10323dd24debd51e299d14377f314ffae",
+            "fullName": "Bagas",
+            "username": "bagas112",
+            "image": "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?w=900&t=st=1707282027~exp=1707282627~hmac=e60db0c8dc884f86608c5cdbdf3ac8f3fdb779c27457f8c459d60bd922f3af71",
+            "content": "Ajarin dong puh sepuh",
+            "posted_at": "2022-01-01",
+            "likes_count": 10,
+            "replies_count": 5
+        }
+    ]
+}

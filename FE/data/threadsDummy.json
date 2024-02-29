@@ -1,0 +1,24 @@
+{
+    "threads": [
+        {
+            "picture": "https://img.freepik.com/free-photo/image-young-asian-business-woman-female-entrepreneur-glasses-holding-tablet-looking-professional-glasses-white-background_1258-89375.jpg?w=826&t=st=1707196391~exp=1707196991~hmac=82103932db23d9f0edbc667a8e9721e10323dd24debd51e299d14377f314ffae",
+            "fullName": "John Doe",
+            "username": "john_doe",
+            "image": "asd.img",
+            "content": "Some content",
+            "posted_at": "2022-01-01",
+            "likes_count": 10,
+            "replies_count": 5
+        },
+        {
+            "picture": "https://img.freepik.com/free-photo/lifestyle-people-emotions-casual-concept-confident-nice-smiling-asian-woman-cross-arms-chest-confident-ready-help-listening-coworkers-taking-part-conversation_1258-59335.jpg?w=826&t=st=1707196428~exp=1707197028~hmac=cd9b118f2f1d16f382b398e0b84efa76100f29d04a381136c32b0e66b9f91186",
+            "fullName": "John Doe",
+            "username": "john_doe",
+            "image": "asd.img",
+            "content": "Some content",
+            "posted_at": "2022-01-01",
+            "likes_count": 10,
+            "replies_count": 5
+        }
+    ]
+}
