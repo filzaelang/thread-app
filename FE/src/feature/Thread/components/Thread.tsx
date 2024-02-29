@@ -22,7 +22,7 @@ const Thread = () => {
                             {/* image */}
                             <Avatar
                                 size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                                src={''}
+                                src={data.created_by?.photo_profile ? data.created_by?.photo_profile : ''}
                             />
                             {/* Thread */}
                             <Flex flexDirection={"column"}>

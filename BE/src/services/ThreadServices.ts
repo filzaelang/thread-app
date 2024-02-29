@@ -146,12 +146,16 @@ export default new class ThreadServices {
                     number_of_replies: true,
                     number_of_likes: true,
                     created_by: {
+                        id: true,
                         username: true,
-                        full_name: true
+                        full_name: true,
+                        photo_profile: true,
                     },
                     updated_by: {
+                        id: true,
                         username: true,
-                        full_name: true
+                        full_name: true,
+                        photo_profile: true,
                     }
                 }
             })

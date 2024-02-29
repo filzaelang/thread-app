@@ -13,7 +13,7 @@ import { RiUserSearchLine } from "react-icons/ri";
 
 export default function SearchUser() {
 
-    const { handleChange, searchResults, searchQuery, handleFollow } = useSearchUser()
+    const { handleChange, searchResults, searchQuery, handleFollow, handleNavigate } = useSearchUser()
 
     return (
         <>
@@ -45,7 +45,7 @@ export default function SearchUser() {
                         src={data.photo_profile}
                     />
                     <Flex flexDirection={"column"}>
-                        <Text color={"white"}>{data.full_name}</Text>
+                        <Text color={"white"} onClick={() => handleNavigate(data.id)}>{data.full_name}</Text>
                         <Text color={"grey"}>@{data.username}</Text>
                         <Text color={"white"}>{data.description}</Text>
                     </Flex>

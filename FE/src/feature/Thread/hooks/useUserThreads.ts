@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 export function useUserThreads() {
     const dispatch = useDispatch();
-    const user = useSelector((state: RootState) => state.auth)
+    // const user = useSelector((state: RootState) => state.auth)
     const userThreads = useSelector((state: RootState) => state.threads)
     const [otherUserThreads, setOtherUserThreads] = useState<any>([])
     setAuthTokenLogin(localStorage.token)

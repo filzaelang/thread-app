@@ -1,7 +1,7 @@
 import { Flex, Text, Spacer } from '@chakra-ui/react'
-import { Button, Image, Avatar, Box } from '@chakra-ui/react'
+import { Button, Avatar } from '@chakra-ui/react'
 
-function SugestedAccout() {
+function SugestedAccount() {
     return (
         <Flex bg={"#262626"} wrap={"wrap"} alignItems={"center"}>
 
@@ -27,4 +27,4 @@ function SugestedAccout() {
     )
 }
 
-export default SugestedAccout
+export default SugestedAccount

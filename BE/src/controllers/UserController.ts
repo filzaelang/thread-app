@@ -36,4 +36,23 @@ export default new class UserController {
             return res.status(500).json({ error: error.message })
         }
     }
+
+    async sugestedAccount(req: Request, res: Response) {
+        try {
+            const loginSession = res.locals.loginSession
+            const response = await UserServices.sugestedAccount(loginSession)
+            return res.status(201).json(response)
+        } catch (error) {
+            return res.status(500).json({ error: error.message })
+        }
+    }
+
+    async getAll(req: Request, res: Response) {
+        try {
+            const response = await UserServices.getAll()
+            return res.status(201).json(response)
+        } catch (error) {
+            return res.status(500).json({ error: error.message })
+        }
+    }
 }

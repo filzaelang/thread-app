@@ -1,7 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entity/User";
 import { Following } from "../entity/Following";
-import { Repository, FindManyOptions, Like } from "typeorm";
+import { Repository, FindManyOptions, Like, Not } from "typeorm";
 import cloudinary from "../libs/cloudinary";
 
 export default new class UserSevices {
@@ -101,4 +101,101 @@ export default new class UserSevices {
             throw new Error(error.message);
         }
     }
+
+    async getAll(): Promise<object | string> {
+        try {
+            const users = await this.UserRepository.find({
+                relations: ["follower", "following"]
+            })
+            return users.map((data) => ({
+                id: data.id,
+                username: data.username,
+                email: data.email,
+                full_name: data.full_name,
+                description: data.description,
+                photo_profile: data.photo_profile,
+                followers_count: data.following.length,
+                following_count: data.follower.length,
+            }))
+        } catch (error) {
+            throw new Error(error.message)
+        }
+
+    }
+
+    async sugestedAccount(loginSession: any): Promise<object | string> {
+        try {
+
+            const users = await this.UserRepository.createQueryBuilder('user')
+                .leftJoinAndSelect("user.following", "following")
+                .leftJoinAndSelect("following.follower_id", "follower_id")
+                .where('user.id != :userId', { userId: loginSession.obj.id })
+                .getMany();
+
+            const mappedData = users.filter((item) => {
+                return !item.following.some(
+                    (following) => following.follower_id.id == loginSession.obj.id
+                )
+            });
+
+            return mappedData.map((data) => ({
+                id: data.id,
+                username: data.username,
+                full_name: data.full_name,
+                email: data.email,
+                photo_profile: data.photo_profile,
+                description: data.description,
+                is_followed: false,
+            }))
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 }
+
+
+// const follow = await this.FollowingRepository.find({
+//     relations: ["follower_id"],
+//     select: {
+//         follower_id: {
+//             id: true,
+//             full_name: true,
+//             username: true,
+//             email: true,
+//             photo_profile: true,
+//             description: true,
+//         },
+//     }
+// })
+
+// const uniqueUserIds = new Set<number>();
+// const filteredFollow = follow.filter((data) => {
+//     const userId = data.follower_id.id;
+//     // Filter user yang bukan user yang sedang login dan belum ditambahkan ke Set
+//     if (userId !== loginSession.obj.id && !uniqueUserIds.has(userId)) {
+//         uniqueUserIds.add(userId);
+//         return true;
+//     }
+//     return false;
+// });
+
+// const result = filteredFollow.slice(0, 2);
+
+// return result.map((data) => ({
+//     id: data.follower_id.id,
+//     full_name: data.follower_id.full_name,
+//     username: data.follower_id.username,
+//     email: data.follower_id.email,
+//     photo_profile: data.follower_id.photo_profile,
+//     description: data.follower_id.description,
+// }));
+
+
+// Sudah paling benar
+// const users = await this.UserRepository.createQueryBuilder('user')
+//     .leftJoinAndSelect("user.following", "following")
+//     .leftJoinAndSelect("user.follower", "follower")
+//     .leftJoinAndSelect("follower.following_id", "following_id")
+//     .leftJoinAndSelect("follower.follower_id", "follower_id")
+//     .where('user.id != :userId', { userId: loginSession.obj.id })
+//     .getMany();

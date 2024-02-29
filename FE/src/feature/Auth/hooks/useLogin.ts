@@ -41,5 +41,9 @@ export function useLogin() {
         }
     }
 
-    return { handleChange, handleLogin }
+    async function handleForgotPassword() {
+        alert("SUKURIN")
+    }
+
+    return { handleChange, handleLogin, handleForgotPassword }
 }

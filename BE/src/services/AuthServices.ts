@@ -72,8 +72,8 @@ export default new class AuthServices {
                 email: idCheck.email,
                 photo_profile: idCheck.photo_profile,
                 description: idCheck.description,
-                followers_count: idCheck.follower.length,
-                following_count: idCheck.following.length
+                followers_count: idCheck.following.length,
+                following_count: idCheck.follower.length
             };
 
             const token = jwt.sign({ obj }, process.env.JWT_SECRET, {
@@ -108,8 +108,8 @@ export default new class AuthServices {
                     email: check.email,
                     photo_profile: check.photo_profile,
                     description: check.description,
-                    followers_count: check.follower.length,
-                    following_count: check.following.length
+                    followers_count: check.following.length,
+                    following_count: check.follower.length
                 },
             }
         } catch (error) {

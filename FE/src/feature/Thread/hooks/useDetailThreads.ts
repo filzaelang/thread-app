@@ -2,7 +2,6 @@ import { useEffect, useState, useRef, ChangeEvent, FormEvent, } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { API } from '../../../libs/api'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_ONE_THREAD } from '../../../store/rootReducer'
 import { RootState } from '../../../store/types/rootStates'
 import { setAuthToken } from '../../../libs/api'
 import { SET_ONE_THREAD_LIKES } from '../../../store/rootReducer'
@@ -99,6 +98,11 @@ export function useDetailThreads() {
         }
     }
 
+    const handleNavigate = async (id: number | undefined) => {
+        const newUrl = `/profile/${id}`;
+        navigate(newUrl);
+    }
+
     useEffect(() => {
         getOneThread()
         getReplies()
@@ -112,6 +116,7 @@ export function useDetailThreads() {
         handleChange,
         handlePostReply,
         replies,
-        isLiked
+        isLiked,
+        handleNavigate
     }
 }

@@ -1,8 +1,6 @@
 import { Box, Flex, Divider, Avatar, Text, Image } from '@chakra-ui/react'
 import { Grid, GridItem, FormControl, Input, Button } from '@chakra-ui/react';
 import { useDetailThreads } from '../feature/Thread/hooks/useDetailThreads';
-import CreateReply from '../feature/Reply/components/CreateReply';
-import Replies from '../feature/Reply/components/Replies';
 import { IReply } from '../interface/ReplyInterface';
 
 //icon
@@ -18,7 +16,8 @@ export default function ThreadDetail() {
         fileInputRef,
         handleChange,
         handlePostReply,
-        replies, isLiked
+        replies, isLiked,
+        handleNavigate
     } = useDetailThreads()
 
     return (
@@ -28,12 +27,19 @@ export default function ThreadDetail() {
                     {/* image */}
                     <Avatar
                         size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                        src={'https://bit.ly/dan-abramov'}
+                        src={thread?.created_by?.photo_profile}
                     />
                     {/* Thread */}
                     <Flex flexDirection={"column"}>
                         <Flex flexDirection={"column"} mb={"10px"}>
-                            <Text color="white" fontWeight="bold" fontSize={"14px"}>{thread?.created_by?.full_name}</Text>
+                            <Text
+                                color="white"
+                                fontWeight="bold"
+                                fontSize={"14px"}
+                                onClick={() => handleNavigate(thread?.created_by?.id)}
+                            >
+                                {thread?.created_by?.full_name}
+                            </Text>
                             <Text color="#606060" fontSize={"14px"}>@{thread?.created_by?.username}</Text>
                             {/* <TbPointFilled color="#606060" fontSize={"14px"} />
                         <Text color="#606060" fontSize={"14px"}>{oneThread.data.created_at}</Text> */}
