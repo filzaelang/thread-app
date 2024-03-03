@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import ThreadServices from "../services/ThreadServices";
 import { createThread, updateThread } from "../utils/validator/ThreadValidator";
 import cloudinary from "../libs/cloudinary";
+import ThreadQueue from "../queue/ThreadQueue";
 
 export default new class ThreadController {
     async getAll(req: Request, res: Response) {
@@ -41,30 +42,31 @@ export default new class ThreadController {
     async create(req: Request, res: Response) {
         try {
 
-            const loginSession = res.locals.loginSession
+            // const loginSession = res.locals.loginSession
 
-            const data = {
-                content: req.body.content ? req.body.content : null,
-                image: req.file ? res.locals.filename : null,
-            }
+            // const data = {
+            //     content: req.body.content ? req.body.content : null,
+            //     image: req.file ? res.locals.filename : null,
+            // }
 
-            const { error, value } = createThread.validate(data);
-            if (error) return res.status(400).json(error);
+            // const { error, value } = createThread.validate(data);
+            // if (error) return res.status(400).json(error);
 
-            if (req.file) {
-                cloudinary.upload();
-                const cloudinaryRes = await cloudinary.destination(value.image)
-                value.image = cloudinaryRes.secure_url
-            }
+            // if (req.file) {
+            //     cloudinary.upload();
+            //     const cloudinaryRes = await cloudinary.destination(value.image)
+            //     value.image = cloudinaryRes.secure_url
+            // }
 
-            const obj = {
-                ...value,
-                created_by: loginSession.obj.id,
-                updated_by: loginSession.obj.id
-            };
+            // const obj = {
+            //     ...value,
+            //     created_by: loginSession.obj.id,
+            //     updated_by: loginSession.obj.id
+            // };
 
-            const response = await ThreadServices.create(obj);
-            return res.status(201).json(response);
+            // const response = await ThreadServices.create(obj);
+            // return res.status(201).json(response);
+            ThreadQueue.create(req, res)
         } catch (error) {
             console.error("Error creating a thread", error);
             return res.status(500).json({ message: "Internal server error", error: error.message });

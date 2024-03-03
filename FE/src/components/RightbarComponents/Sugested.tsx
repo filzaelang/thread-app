@@ -10,8 +10,6 @@ function Sugested() {
             <CardBody bg={"#262626"} borderRadius={"10px"}>
                 <Heading as={"h3"} fontSize={"md"} color={"white"} marginBottom={"10px"}>Sugested for you</Heading>
                 <SugestedAccount />
-                <SugestedAccount />
-                <SugestedAccount />
             </CardBody>
         </Card>
     )

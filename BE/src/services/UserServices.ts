@@ -138,7 +138,9 @@ export default new class UserSevices {
                 )
             });
 
-            return mappedData.map((data) => ({
+            const result = mappedData.slice(0, 2);
+
+            return result.map((data) => ({
                 id: data.id,
                 username: data.username,
                 full_name: data.full_name,

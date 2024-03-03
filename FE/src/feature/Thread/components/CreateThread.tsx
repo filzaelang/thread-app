@@ -1,6 +1,8 @@
 import { Button, Text, Avatar, Input } from '@chakra-ui/react'
 import { Grid, GridItem, FormControl } from "@chakra-ui/react"
 import { useThreads } from '../hooks/useThreads';
+import { RootState } from '../../../store/types/rootStates';
+import { useSelector } from 'react-redux';
 
 
 //components
@@ -8,6 +10,7 @@ import { LuImagePlus } from "react-icons/lu";
 
 function CreateThread() {
     const { handleChange, handlePostThread, fileInputRef } = useThreads()
+    const auth = useSelector((state: RootState) => state.auth)
 
     return (
         <>
@@ -17,8 +20,7 @@ function CreateThread() {
                 <GridItem colSpan={{ base: 1, lg: 1, xl: 1 }} padding="0" position="relative" zIndex={1}>
                     <Avatar
                         size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                        src={'https://bit.ly/dan-abramov'}
-                        name='Dan Abramov'
+                        src={auth.data.photo_profile}
                     />
                 </GridItem>
 
