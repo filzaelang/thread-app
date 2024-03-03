@@ -73,34 +73,35 @@ export default new class UserSevices {
         }
     }
 
-    async update(reqBody: any, loginSession: any, file: any, fileName: string): Promise<object | string> {
-        try {
+    // gk guna karena udh pakai queue
+    // async update(reqBody: any, loginSession: any, file: any, fileName: string): Promise<object | string> {
+    //     try {
 
-            let image = file ? fileName : null
+    //         let image = file ? fileName : null
 
-            if (file) {
-                cloudinary.upload()
-                const cloudinaryRes = await cloudinary.destination(image)
-                image = cloudinaryRes.secure_url
-            }
+    //         if (file) {
+    //             cloudinary.upload()
+    //             const cloudinaryRes = await cloudinary.destination(image)
+    //             image = cloudinaryRes.secure_url
+    //         }
 
-            const updateUser = this.UserRepository.create({
-                username: reqBody.username,
-                full_name: reqBody.full_name,
-                description: reqBody.description,
-                photo_profile: image,
-            });
+    //         const updateUser = this.UserRepository.create({
+    //             username: reqBody.username,
+    //             full_name: reqBody.full_name,
+    //             description: reqBody.description,
+    //             photo_profile: image,
+    //         });
 
-            const response = await this.UserRepository.update(loginSession.obj.id, updateUser)
+    //         const response = await this.UserRepository.update(loginSession.obj.id, updateUser)
 
-            return {
-                message: "Succes updating",
-                data: response,
-            };
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
+    //         return {
+    //             message: "Succes updating",
+    //             data: response,
+    //         };
+    //     } catch (error) {
+    //         throw new Error(error.message);
+    //     }
+    // }
 
     async getAll(): Promise<object | string> {
         try {
