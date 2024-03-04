@@ -1,15 +1,16 @@
 import { Flex, Text, Spacer } from '@chakra-ui/react'
 import { Button, Avatar } from '@chakra-ui/react'
 import { useSugestedAccount } from '../hooks/useSugestedAccount'
+import { IUserSugested } from '../../../interface/UserInterface'
 
 function SugestedAccount() {
 
-    const { sugestedAccount } = useSugestedAccount()
+    const { sugestedAccount, handleFollow } = useSugestedAccount()
 
     return (
         <>
             {
-                sugestedAccount?.map((data: any) => (
+                sugestedAccount?.map((data: IUserSugested) => (
                     <Flex bg={"#262626"} wrap={"wrap"} alignItems={"center"} key={data.id}>
                         <Avatar
                             size={"sm"}
@@ -22,6 +23,7 @@ function SugestedAccount() {
                         </Flex>
                         <Spacer />
                         <Button
+                            onClick={() => handleFollow(data.id, data.is_followed)}
                             backgroundColor="#1d1d1d"
                             border={'2px solid white'}
                             borderRadius={"10px"}

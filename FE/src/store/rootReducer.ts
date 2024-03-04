@@ -12,7 +12,7 @@ export const { GET_THREADS, SET_THREADS_LIKES } = threadsSlice.actions;
 export const { GET_ONE_THREAD, SET_ONE_THREAD_LIKES } = oneThreadsSlice.actions;
 export const { GET_REPLIES } = repliesSlices.actions;
 export const { GET_FOLLOWS, SET_FOLLOW_STATE, SET_FOLLOW_FOLLOW } = followSlice.actions;
-export const { GET_ALL_USERS } = userSlice.actions;
+export const { GET_SUGESTED_ACCOUNT } = userSlice.actions;
 
 export const authReducer = authSlice.reducer;
 export const threadReducer = threadsSlice.reducer;

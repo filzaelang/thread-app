@@ -19,12 +19,10 @@ export const followSlice = createSlice({
             state.followState = action.payload
         },
         SET_FOLLOW_FOLLOW: (state, action) => {
-            const payload = action.payload
-            // console.log(payload)
-            const { id, is_followed } = action.payload
+            const { user_id, is_followed } = action.payload
 
             const newFollow = state.data.map((data: IFollow) => {
-                if (data.id === id) {
+                if (data.user_id === user_id) {
                     return {
                         ...data,
                         is_followed: !is_followed,

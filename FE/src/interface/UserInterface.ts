@@ -9,6 +9,16 @@ export interface IUser {
     following_count?: number;
 }
 
+export interface IUserSugested {
+    id?: number;
+    username?: string;
+    full_name?: string;
+    email?: string;
+    photo_profile?: string | undefined;
+    description?: string;
+    is_followed?: boolean;
+}
+
 export interface IUserSearchResult {
     id?: number;
     username?: string;

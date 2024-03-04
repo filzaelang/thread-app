@@ -1,7 +1,7 @@
-import { IUser } from "../../interface/UserInterface";
+import { IUserSugested } from "../../interface/UserInterface";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialUsersState: { data: IUser[] } = {
+const initialUsersState: { data: IUserSugested[] } = {
     data: []
 }
 
@@ -9,7 +9,7 @@ export const userSlice = createSlice({
     name: "users",
     initialState: initialUsersState,
     reducers: {
-        GET_ALL_USERS: (state, action) => {
+        GET_SUGESTED_ACCOUNT: (state, action) => {
             const payload = action.payload
             // console.log(payload)
             state.data = payload

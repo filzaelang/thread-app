@@ -1,13 +1,11 @@
 import { Flex, Heading } from "@chakra-ui/react"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { Follow } from "../feature/Follow/components/Follow"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../store/types/rootStates"
+import { useDispatch } from "react-redux"
 import { SET_FOLLOW_STATE } from "../store/rootReducer"
 
 function Follows() {
     const dispatch = useDispatch()
-    const followState = useSelector((state: RootState) => state.follow.followState)
 
     return (
         <>

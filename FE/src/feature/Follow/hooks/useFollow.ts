@@ -26,12 +26,12 @@ export default function useFollow() {
             if (is_followed == false) {
                 await API.post("/follow", { following_id: user_id })
                 // console.log(response.data.data)
-                dispatch(SET_FOLLOW_FOLLOW({ id: id, is_followed: is_followed }))
+                dispatch(SET_FOLLOW_FOLLOW({ user_id: user_id, is_followed: is_followed }))
                 dispatch(SET_FOLLOWING_COUNT({ is_followed: is_followed }))
             } else if (is_followed) {
                 await API.delete(`/follow/${user_id}`)
                 // console.log(response)
-                dispatch(SET_FOLLOW_FOLLOW({ id: id, is_followed: is_followed }))
+                dispatch(SET_FOLLOW_FOLLOW({ user_id: user_id, is_followed: is_followed }))
                 dispatch(SET_FOLLOWING_COUNT({ is_followed: is_followed }))
             }
         } catch (error) {
