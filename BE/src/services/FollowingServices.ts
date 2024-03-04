@@ -114,7 +114,7 @@ export default new class FollowingServices {
 
                         return {
                             id: data.id,
-                            follower_id: data.follower_id?.id,
+                            user_id: data.follower_id?.id,
                             username: data.follower_id?.username,
                             full_name: data.follower_id?.full_name,
                             email: data.follower_id?.email,
@@ -150,7 +150,7 @@ export default new class FollowingServices {
 
                         return {
                             id: data.id,
-                            following_id: data.following_id.id,
+                            user_id: data.following_id.id,
                             username: data.following_id.username,
                             full_name: data.following_id.full_name,
                             email: data.following_id.email,

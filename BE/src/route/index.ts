@@ -47,5 +47,26 @@ router.post("/follow", AuthMiddleware.Auth, FollowingController.create)
 router.get("/follows", AuthMiddleware.Auth, FollowingController.find)
 router.delete("/follow/:following_id", AuthMiddleware.Auth, FollowingController.delete)
 
+// NOTIFICATION SSE 
+router.get("/notification", (req: express.Request, res: express.Response) => {
+    res.setHeader("Content-Type", "text/event-stream")
+    res.setHeader("Cache-Control", "no-cache")
+    res.setHeader("Connection", "keep-alive")
+
+    res.write("event: message\n")
+    function sendNotification(data: any) {
+        res.write("Data : " + data + "\n\n")
+    }
+
+
+    router.get("/new-thread", (req, res) => {
+        const thread = JSON.stringify({ data: "New Thread!" })
+        sendNotification(thread)
+
+        res.sendStatus(200)
+    })
+
+})
+
 
 export default router;

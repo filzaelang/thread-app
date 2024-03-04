@@ -61,21 +61,13 @@ export const authSlice = createSlice({
                 state.data.photo_profile = photo_profile
             }
         },
-        SET_FOLLOW: (state, action) => {
-            const payload = action.payload
-            console.log(payload)
-            const user: IUser = {
-                id: payload.check.id,
-                username: payload.check.username,
-                full_name: payload.check.full_name,
-                email: payload.check.email,
-                photo_profile: payload.check.photo_profile,
-                description: payload.check.description,
-                followers_count: payload.check.followers_count,
-                following_count: payload.check.following_count,
-            };
-
-            state.data = user
+        SET_FOLLOWING_COUNT: (state, action) => {
+            const { is_followed } = action.payload
+            if (!is_followed) {
+                state.data.following_count = (state.data.following_count ?? 0) + 1
+            } else {
+                state.data.following_count = (state.data.following_count ?? 0) - 1
+            }
         },
         AUTH_LOGOUT: (state) => {
             setAuthToken(null);

@@ -1,72 +1,51 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { API } from "../../../libs/api";
 import { setAuthTokenLogin } from "../../../libs/api";
-import { useDispatch } from "react-redux"
-import { SET_FOLLOW } from "../../../store/rootReducer";
+import { useDispatch, useSelector } from "react-redux"
+import { GET_FOLLOWS, SET_FOLLOW_FOLLOW, SET_FOLLOWING_COUNT } from "../../../store/rootReducer";
+import { RootState } from "../../../store/types/rootStates";
 
 export default function useFollow() {
-
-    const [followers, setFollowers] = useState<any>([]);
-    const [followings, setFollowings] = useState<any>([]);
+    const follow = useSelector((state: RootState) => state.follow.data)
+    const followState = useSelector((state: RootState) => state.follow.followState)
     setAuthTokenLogin(localStorage.token);
     const dispatch = useDispatch();
 
-    async function getFollowers() {
+    async function getFollow() {
         try {
-            const response = await API.get("/follows?type=followers")
-            setFollowers(response.data)
+            const response = await API.get(`/follows?type=${followState}`)
+            // console.log(response.data)
+            dispatch(GET_FOLLOWS(response.data))
         } catch (error) {
             console.error("Error searching users:", error);
         }
     }
 
-    async function getFollowings() {
-        try {
-            const response = await API.get("/follows?type=followings")
-            setFollowings(response.data)
-        } catch (error) {
-            console.error("Error searching users:", error);
-        }
-    }
-
-    async function handleFollowFollowers(id: number | undefined, is_followed: boolean | undefined) {
+    async function handleFollow(id: number | undefined, user_id: number | undefined, is_followed: boolean | undefined) {
         try {
             if (is_followed == false) {
-                const response = await API.post("/follow", { following_id: id })
-                // Update local state without making an API call
-                setFollowers((prevFollowers: any) => [...prevFollowers, response.data]);
+                await API.post("/follow", { following_id: user_id })
+                // console.log(response.data.data)
+                dispatch(SET_FOLLOW_FOLLOW({ id: id, is_followed: is_followed }))
+                dispatch(SET_FOLLOWING_COUNT({ is_followed: is_followed }))
             } else if (is_followed) {
-                await API.delete(`/follow/${id}`)
-                // Update local state without making an API call
-                setFollowers((prevFollowers: any) => prevFollowers.filter((follower: any) => follower.id !== id));
+                await API.delete(`/follow/${user_id}`)
+                // console.log(response)
+                dispatch(SET_FOLLOW_FOLLOW({ id: id, is_followed: is_followed }))
+                dispatch(SET_FOLLOWING_COUNT({ is_followed: is_followed }))
             }
-            dispatch(SET_FOLLOW({ id: id }))
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    async function handleFollowFollowings(id: number | undefined, is_followed: boolean | undefined) {
-        try {
-            console.log(id, is_followed)
-            if (!is_followed) {
-                await API.post("/follow", { following_id: id })
-            } else if (is_followed) {
-                await API.delete(`/follow/${id}`)
-            }
-            getFollowings()
         } catch (error) {
             console.error(error);
         }
     }
 
     useEffect(() => {
-        getFollowers()
-        getFollowings()
-    }, [followers,])
+        getFollow()
+    }, [followState])
+
 
     return {
-        followers, followings, handleFollowFollowers, handleFollowFollowings
+        follow, handleFollow
     }
 }
 

@@ -3,6 +3,8 @@ import cloudinary from "../libs/cloudinary"
 import { Repository } from "typeorm"
 import { Thread } from "../entity/Thread"
 import { AppDataSource } from "../data-source"
+import { EventEmitter } from "stream"
+import { request } from "http";
 
 export default new class ThreadWorker {
     private readonly ThreadWorker: Repository<Thread> = AppDataSource.getRepository(Thread)
@@ -32,6 +34,17 @@ export default new class ThreadWorker {
 
                         await this.ThreadWorker.save(obj)
 
+                        // const req = request({
+                        //     hostname: "localhost",
+                        //     port: 5000,
+                        //     path: "/api/v1/notification",
+                        //     method: "GET"
+                        // })
+
+                        // req.on("error", (error) => console.log("Error Message : " + error))
+
+                        // req.end();
+
                         console.log("Thread is Created !")
 
                         channel.ack(message)
@@ -52,6 +65,17 @@ export default new class ThreadWorker {
                         })
 
                         await this.ThreadWorker.save(obj)
+
+                        // const req = request({
+                        //     hostname: "localhost",
+                        //     port: 5000,
+                        //     path: "/api/v1/notification",
+                        //     method: "GET"
+                        // })
+
+                        // req.on("error", (error) => console.log("Error Message : " + error))
+
+                        // req.end();
 
                         console.log("Thread is Created !")
 

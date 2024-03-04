@@ -8,7 +8,7 @@ export function useSugestedAccount() {
     async function getSugestedAccount() {
         try {
             const response = await API.get(`/user/sugestedAccount`)
-            console.log(response)
+            // console.log(response)
             setSugestedAcount(response.data)
         } catch (error) {
             console.error("Error getting sugestion error:", error)

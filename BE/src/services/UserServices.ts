@@ -12,9 +12,16 @@ export default new class UserSevices {
         try {
             const user = await this.UserRepository.find({
                 where: [
-                    { username: Like(`%${reqBody.username}%`) },
-                    { full_name: Like(`%${reqBody.username}%`) },
+                    {
+                        username: Like(`%${reqBody.username}%`),
+                        id: Not(loginSession.obj.id)
+                    },
+                    {
+                        full_name: Like(`%${reqBody.username}%`),
+                        id: Not(loginSession.obj.id)
+                    },
                 ],
+                take: 5,
             } as FindManyOptions<User>);
 
             return await Promise.all(

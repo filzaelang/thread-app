@@ -21,3 +21,14 @@ export interface IFollowing {
     description?: string,
     is_followed?: boolean,
 }
+
+export interface IFollow {
+    id?: number,
+    user_id?: number,
+    username?: string,
+    full_name?: string,
+    email?: string,
+    photo_profile?: string,
+    description?: string,
+    is_followed?: boolean,
+}

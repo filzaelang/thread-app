@@ -33,7 +33,6 @@ function Navbar() {
 
     const activeItemStyles = {
         fontWeight: "bolder",
-        fontSize: "30px"
     };
 
     return (

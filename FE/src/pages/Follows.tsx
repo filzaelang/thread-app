@@ -1,8 +1,14 @@
 import { Flex, Heading } from "@chakra-ui/react"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import { Followers, Following } from "../feature/Follow/components/Follow"
+import { Follow } from "../feature/Follow/components/Follow"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../store/types/rootStates"
+import { SET_FOLLOW_STATE } from "../store/rootReducer"
 
 function Follows() {
+    const dispatch = useDispatch()
+    const followState = useSelector((state: RootState) => state.follow.followState)
+
     return (
         <>
             <Flex ms={"10px"} me={"10px"}>
@@ -10,16 +16,16 @@ function Follows() {
             </Flex>
             <Tabs isFitted>
                 <TabList>
-                    <Tab color={"white"}>Followers</Tab>
-                    <Tab color={"white"}>Following</Tab>
+                    <Tab color={"white"} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>Followers</Tab>
+                    <Tab color={"white"} onClick={() => dispatch(SET_FOLLOW_STATE("followings"))}>Following</Tab>
                 </TabList>
 
                 <TabPanels>
                     <TabPanel>
-                        <Followers />
+                        <Follow />
                     </TabPanel>
                     <TabPanel>
-                        <Following />
+                        <Follow />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
