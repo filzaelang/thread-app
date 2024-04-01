@@ -5,23 +5,6 @@ import { Replie } from "../entity/Replie";
 export default new class RepliesServices {
     private readonly RepliesRepository: Repository<Replie> = AppDataSource.getRepository(Replie);
 
-    // async create(data: Replie): Promise<object | string> {
-    //     try {
-    //         const response = this.RepliesRepository.save({
-    //             ...data,
-    //             created_at: new Date(),
-    //             updated_at: new Date()
-    //         });
-
-    //         return {
-    //             message: "sucess creating a reply",
-    //             data: response
-    //         }
-
-    //     } catch (error) {
-    //         throw new Error(error.message);
-    //     }
-    // }
     async create(data: Replie): Promise<any> {
         try {
             const response = this.RepliesRepository.save({
@@ -31,7 +14,7 @@ export default new class RepliesServices {
             })
 
             return {
-                message: "success creating a new thread",
+                message: "success creating a a reply",
                 data: response
             };
         } catch (error) {
@@ -66,11 +49,13 @@ export default new class RepliesServices {
                     },
                     created_by: {
                         username: true,
-                        full_name: true
+                        full_name: true,
+                        photo_profile: true,
                     },
                     updated_by: {
                         username: true,
-                        full_name: true
+                        full_name: true,
+                        photo_profile: true,
                     }
                 }
             });

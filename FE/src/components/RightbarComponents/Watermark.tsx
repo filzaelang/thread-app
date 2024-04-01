@@ -10,7 +10,7 @@ import { AiFillInstagram } from "react-icons/ai";
 
 function Watermark() {
     return (
-        <Card bg={"#262626"} mt={"20px"} mb={"5px"}>
+        <Card bg={"#262626"} mt={"20px"} mb={"5px"} borderRadius={"10px"}>
             <CardBody>
                 <Flex flexDirection={'column'}>
                     <Flex flexDirection={"row"} gap={1} alignItems={"center"}>

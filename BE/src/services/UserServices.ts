@@ -80,35 +80,88 @@ export default new class UserSevices {
         }
     }
 
-    // gk guna karena udh pakai queue
-    // async update(reqBody: any, loginSession: any, file: any, fileName: string): Promise<object | string> {
-    //     try {
+    async update(reqBody: any, loginSession: any, file: any, fileName: string): Promise<object | string> {
+        try {
 
-    //         let image = file ? fileName : null
+            let image = file ? fileName : null
+            const id = loginSession.obj.id
 
-    //         if (file) {
-    //             cloudinary.upload()
-    //             const cloudinaryRes = await cloudinary.destination(image)
-    //             image = cloudinaryRes.secure_url
-    //         }
+            const user = await this.UserRepository.findOne({
+                where: { id },
+            })
 
-    //         const updateUser = this.UserRepository.create({
-    //             username: reqBody.username,
-    //             full_name: reqBody.full_name,
-    //             description: reqBody.description,
-    //             photo_profile: image,
-    //         });
+            if (file) {
+                cloudinary.upload()
+                const cloudinaryRes = await cloudinary.destination(image)
+                image = cloudinaryRes.secure_url
+            } else {
+                image = user.photo_profile
+            }
 
-    //         const response = await this.UserRepository.update(loginSession.obj.id, updateUser)
+            const full_name = reqBody.full_name ? reqBody.full_name : user.full_name
+            const description = reqBody.description ? reqBody.description : user.description
 
-    //         return {
-    //             message: "Succes updating",
-    //             data: response,
-    //         };
-    //     } catch (error) {
-    //         throw new Error(error.message);
-    //     }
-    // }
+            const updateUser = this.UserRepository.create({
+                username: reqBody.username,
+                full_name: full_name,
+                description: description,
+                photo_profile: image,
+            });
+
+            const response = await this.UserRepository.update(loginSession.obj.id, updateUser)
+
+            return {
+                message: "Succes updating",
+                data: response,
+            };
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async updatePhotoProfile(loginSession: any, file: any, fileName: string): Promise<object | string> {
+        try {
+            let image = file ? fileName : null
+            cloudinary.upload()
+            const cloudinaryRes = await cloudinary.destination(image)
+            image = cloudinaryRes.secure_url
+
+            const updatePhotoProfile = this.UserRepository.create({
+                photo_profile: image
+            })
+
+            const response = await this.UserRepository.update(loginSession.obj.id, updatePhotoProfile)
+
+            return {
+                message: "Success changing photo profile",
+                data: response
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    async updateBackgroundProfile(loginSession: any, file: any, fileName: string): Promise<object | string> {
+        try {
+            let image = file ? fileName : null
+            cloudinary.upload()
+            const cloudinaryRes = await cloudinary.destination(image)
+            image = cloudinaryRes.secure_url
+
+            const updateBackgroundImage = this.UserRepository.create({
+                background_image: image
+            })
+
+            const response = await this.UserRepository.update(loginSession.obj.id, updateBackgroundImage)
+
+            return {
+                message: "Success changing background image",
+                data: response
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
 
     async getAll(): Promise<object | string> {
         try {
@@ -162,50 +215,3 @@ export default new class UserSevices {
         }
     }
 }
-
-
-// const follow = await this.FollowingRepository.find({
-//     relations: ["follower_id"],
-//     select: {
-//         follower_id: {
-//             id: true,
-//             full_name: true,
-//             username: true,
-//             email: true,
-//             photo_profile: true,
-//             description: true,
-//         },
-//     }
-// })
-
-// const uniqueUserIds = new Set<number>();
-// const filteredFollow = follow.filter((data) => {
-//     const userId = data.follower_id.id;
-//     // Filter user yang bukan user yang sedang login dan belum ditambahkan ke Set
-//     if (userId !== loginSession.obj.id && !uniqueUserIds.has(userId)) {
-//         uniqueUserIds.add(userId);
-//         return true;
-//     }
-//     return false;
-// });
-
-// const result = filteredFollow.slice(0, 2);
-
-// return result.map((data) => ({
-//     id: data.follower_id.id,
-//     full_name: data.follower_id.full_name,
-//     username: data.follower_id.username,
-//     email: data.follower_id.email,
-//     photo_profile: data.follower_id.photo_profile,
-//     description: data.follower_id.description,
-// }));
-
-
-// Sudah paling benar
-// const users = await this.UserRepository.createQueryBuilder('user')
-//     .leftJoinAndSelect("user.following", "following")
-//     .leftJoinAndSelect("user.follower", "follower")
-//     .leftJoinAndSelect("follower.following_id", "following_id")
-//     .leftJoinAndSelect("follower.follower_id", "follower_id")
-//     .where('user.id != :userId', { userId: loginSession.obj.id })
-//     .getMany();

@@ -71,6 +71,7 @@ export default new class AuthServices {
                 full_name: idCheck.full_name,
                 email: idCheck.email,
                 photo_profile: idCheck.photo_profile,
+                background_image: idCheck.background_image,
                 description: idCheck.description,
                 followers_count: idCheck.following.length,
                 following_count: idCheck.follower.length

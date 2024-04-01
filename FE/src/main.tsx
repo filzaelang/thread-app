@@ -10,6 +10,8 @@ import {
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import rootReducer from './store/rootReducer.ts'
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient()
 
@@ -24,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Provider store={store}>
           <BrowserRouter>
             <App />
+            <ToastContainer />
           </BrowserRouter>
         </Provider>
       </ChakraProvider>

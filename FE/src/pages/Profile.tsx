@@ -1,62 +1,130 @@
 import {
     Text,
     Card,
-    CardBody,
-    Heading,
     Flex,
     Image,
-    Avatar,
-    Stack,
+    Button,
+    Box,
+    useDisclosure,
+    Input
 } from "@chakra-ui/react"
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+} from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import EditProfile from "../feature/UserProfile/components/EditProfile"
 import { UserThreads } from "../feature/Thread/components/UserThreads"
 import { useSelector } from "react-redux"
 import { RootState } from "../store/types/rootStates"
+import { useEditPP } from "../feature/UserProfile/hooks/useEditPP"
+
 
 function Profile() {
-    const user = useSelector((state: RootState) => state.auth)
+    const user = useSelector((state: RootState) => state.auth.data)
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { fileInputRef, handleChange, handleUpdatePP } = useEditPP()
+
     return (
         <>
-            <Card bg="#1d1d1d" ms={"10px"} me={"10px"}>
-                <CardBody bg={"#262626"} borderRadius={"20px"}>
-                    <Heading as={"h3"} fontSize={"md"} color={"white"}>My Profile</Heading>
-                    <Flex flexDirection='column' marginTop={"10px"} mb={4}>
-                        <Image
-                            borderRadius={"10px"}
-                            width={"100%"}
-                            height={"200px"}
-                            objectFit={"cover"}
-                            src='https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'
-                        />
-                        <Avatar
-                            size={"lg"}
-                            name='Photo Profile'
-                            src={user.data.photo_profile ? user.data.photo_profile : ''}
-                            position={"relative"}
-                            bottom={"30"}
-                            left={"5"}
-                            border={'5px solid black'}
-                        />
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent bg={"#262626"}>
+                    <ModalHeader color={"white"}>Change Profile Picture</ModalHeader>
+                    <ModalCloseButton color={"white"} />
+                    <form onSubmit={handleUpdatePP} encType="multipart/form-data">
+                        <ModalBody>
+                            <Input
+                                id="photo_profile"
+                                name='photo_profile'
+                                type="file"
+                                accept="image/*"
+                                color={"white"}
+                                onChange={handleChange}
+                                ref={fileInputRef}
+                            />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme='whiteAlpha' variant='outline' mr={3} onClick={onClose}>
+                                Close
+                            </Button>
+                            <Button colorScheme="teal" variant='solid' type='submit' onClick={onClose}>
+                                Submit
+                            </Button>
+                        </ModalFooter>
+                    </form>
+                </ModalContent>
+            </Modal>
+
+            <Card my={2} bg={"#262626"} borderRadius={"10px"} ms={"10px"} me={"10px"}>
+                <Flex
+                    borderRadius="20px"
+                    bg={"#262626"}
+                    px="20px"
+                    pt="10px"
+                    direction="column"
+                    h="fit-content"
+                >
+                    <Text my={1} fontSize={18} fontWeight="bold" color={"white"}>
+                        My Profile
+                    </Text>
+                    <Image
+                        src={user.background_image ? user.background_image : 'https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'}
+                        maxW="100%"
+                        h={"200px"}
+                        borderRadius="20px"
+                    />
+                    <Flex w="full">
+                        <Flex flexDirection="column" ms={"20px"} mb="30px" w="full" px={4} className="photo-profile">
+                            <Image
+                                src={user.photo_profile}
+                                border="5px solid red"
+                                borderColor={"#262626"}
+                                width="100px"
+                                height="100px"
+                                mt="-50px"
+                                borderRadius="50%"
+                                onClick={onOpen}
+                                sx={{
+                                    '.photo-profile:hover &': {
+                                        filter: 'blur(8px)',
+                                    },
+                                }}
+                            />
+                        </Flex>
                     </Flex>
-                    <Stack spacing='0.5' marginTop={"-10"}>
-                        <Text color={"white"} fontSize={"xl"} fontWeight={"bold"}>{user.data.full_name}</Text>
-                        <Text color={"#606060"}>@{user.data.username}</Text>
-                        <Text color={"white"}>{user.data.description}</Text>
-                        <Flex>
-                            <Flex gap={3}>
-                                <Flex gap={0.5}>
-                                    <Text color={"white"}>{user.data.following_count}</Text>
-                                    <Text color={"#606060"}>Following</Text>
-                                </Flex>
-                                <Flex gap={0.5}>
-                                    <Text color={"white"}>{user.data.followers_count}</Text>
-                                    <Text color={"#606060"}>Follower</Text>
-                                </Flex>
+                    <Box mt={-7} mb={5}>
+                        <Text fontWeight="600" color={"white"} fontSize="xl">
+                            {user.full_name}
+                        </Text>
+                        <Text color="gray">@{user.username}</Text>
+                        <Text color={"white"}>{user.description}</Text>
+                        <Flex gap={4} alignItems="center">
+                            <Flex alignItems="center" gap="2px">
+                                <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
+                                    {user.following_count ? user.following_count : 0}
+                                </Text>
+                                <Text fontSize="14px" color={"#606060"}>
+                                    Following
+                                </Text>
+                            </Flex>
+
+                            <Flex alignItems="center" gap="2px">
+                                <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
+                                    {user.followers_count ? user.followers_count : 0}
+                                </Text>
+                                <Text fontSize="14px" color={"#606060"}>
+                                    Follower
+                                </Text>
                             </Flex>
                         </Flex>
-                    </Stack>
-                </CardBody>
+                    </Box>
+                </Flex>
             </Card >
             <Tabs isFitted variant='enclosed' mt={"10px"}>
                 <TabList>
@@ -65,7 +133,7 @@ function Profile() {
                 </TabList>
 
                 <TabPanels>
-                    <TabPanel>
+                    <TabPanel onClick={() => window.location.reload()}>
                         <UserThreads />
                     </TabPanel>
                     <TabPanel>

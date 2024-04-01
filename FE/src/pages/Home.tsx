@@ -4,7 +4,6 @@ import { Heading, Flex } from "@chakra-ui/react"
 import CreateThread from "../feature/Thread/components/CreateThread";
 import Thread from "../feature/Thread/components/Thread";
 
-
 function Home() {
 
     return (

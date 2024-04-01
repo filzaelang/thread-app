@@ -5,7 +5,7 @@ import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { AUTH_LOGIN } from "../../../store/rootReducer";
 import { useNavigate } from 'react-router-dom';
-import { setAuthToken } from "../../../libs/api";
+import { toast } from "react-toastify";
 
 export function useLogin() {
     const navigate = useNavigate()
@@ -27,12 +27,13 @@ export function useLogin() {
         try {
             const response = await API.post("/auth/login", data)
             dispatch(AUTH_LOGIN(response.data))
+            toast.success("Login success !")
             navigate("/")
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<{ error: string }>;
                 const errorMessage = axiosError.response?.data?.error;
-                alert(errorMessage)
+                toast.error(errorMessage)
                 throw axiosError;
             } else {
                 alert("An unexpected error occurred");
@@ -42,7 +43,7 @@ export function useLogin() {
     }
 
     async function handleForgotPassword() {
-        alert("SUKURIN")
+        toast.error("SUKURIN")
     }
 
     return { handleChange, handleLogin, handleForgotPassword }

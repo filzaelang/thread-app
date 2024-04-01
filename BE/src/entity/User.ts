@@ -29,6 +29,9 @@ export class User {
     photo_profile: string;
 
     @Column({ nullable: true })
+    background_image: string;
+
+    @Column({ nullable: true })
     description: string;
 
     @OneToMany(() => Thread, (thread) => thread.created_by, {

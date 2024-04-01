@@ -4,29 +4,27 @@ import { API } from '../../../libs/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../store/types/rootStates'
 import { setAuthToken } from '../../../libs/api'
-import { SET_ONE_THREAD_LIKES } from '../../../store/rootReducer'
+import { GET_ONE_THREAD, SET_ONE_THREAD_LIKES } from '../../../store/rootReducer'
 import { IThreadCard } from '../../../interface/ThreadInterface'
+import { toast } from "react-toastify";
 
 export function useDetailThreads() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const oneThread = useSelector((state: RootState) => state.oneThreads)
     setAuthToken(localStorage.token)
 
     const { id } = useParams()
     const [replies, setReplies] = useState<IThreadCard[]>();
-    const [thread, setThread] = useState<IThreadCard>();
+    const thread = useSelector((state: RootState) => state.oneThreads.data)
     const [isLiked, setIsLiked] = useState<boolean>(false);
 
     async function getOneThread() {
         try {
             const response = await API.get(`/thread/${id}`);
             // console.log(response.data.data)
-            setThread(response.data.data);
-            // console.log("ini data thread detail", response.data);
+            dispatch(GET_ONE_THREAD(response.data.data))
         } catch (err) {
             console.log("Failed to get thread : ", err);
-            // console.log("gagal mengambil data thread by id : ", err);
         }
     }
 
@@ -76,6 +74,7 @@ export function useDetailThreads() {
         try {
             const response = await API.post("/reply", formData);
             console.log("Success posting reply : ", response);
+            toast.success("Success posting a reply")
             getReplies();
         } catch (error) {
             console.error("Error posting reply:", error);

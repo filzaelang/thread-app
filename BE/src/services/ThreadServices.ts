@@ -10,26 +10,25 @@ export default new class ThreadServices {
     private readonly LikeRepository: Repository<Like> = AppDataSource.getRepository(Like);
 
     //semenjak ada queue create jadi gk guna
-    // async create(data: Thread): Promise<object | string> {
-    //     try {
-    //         const response = this.ThreadRepository.save({
-    //             ...data,
-    //             created_at: new Date(),
-    //             updated_at: new Date()
-    //         });
+    async create(data: Thread): Promise<object | string> {
+        try {
+            const response = this.ThreadRepository.save({
+                ...data,
+                created_at: new Date(),
+                updated_at: new Date()
+            });
 
-    //         return {
-    //             message: "success creating a new thread",
-    //             data: response
-    //         };
-    //     } catch (error) {
-    //         throw new Error(error.message);
-    //     }
-    // }
+            return {
+                message: "success creating a new thread",
+                data: response
+            };
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 
     async update(id: number, data: Thread): Promise<object | string> {
         try {
-
             if (data.image) {
                 cloudinary.upload();
                 const cloudinaryRes = await cloudinary.destination(data.image);

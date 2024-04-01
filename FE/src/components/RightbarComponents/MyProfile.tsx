@@ -1,64 +1,90 @@
-import { Heading, Flex, Image, Text } from '@chakra-ui/react'
-import { Card, CardBody, Stack, Button, Avatar } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/types/rootStates'
+import {
+    Box,
+    Button,
+    Card,
+    Flex,
+    Image,
+    Text,
+} from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/types/rootStates";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function MyProfile() {
-    const user = useSelector((state: RootState) => state.auth)
+const MyProfile = () => {
+    const user = useSelector((state: RootState) => state.auth.data)
 
     return (
-
-        <Card bg="#1d1d1d" >
-            <CardBody bg={"#262626"} borderRadius={"20px"}>
-                <Heading as={"h3"} fontSize={"md"} color={"white"}>My Profile</Heading>
-                <Flex flexDirection='column' marginTop={"10px"} mb={4}>
-                    <Image
-                        borderRadius={"10px"}
-                        width={"100%"}
-                        height={"80px"}
-                        objectFit={"cover"}
-                        src='https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'
-                    />
-                    <Avatar
-                        size={"lg"}
-                        name='Photo Profile'
-                        src={user.data.photo_profile ? user.data.photo_profile : ''}
-                        position={"relative"}
-                        bottom={"30"}
-                        left={"5"}
-                        border={'5px solid black'}
-                    />
+        <Card my={2} bg={"#262626"} borderRadius={"10px"}>
+            <Flex
+                borderRadius="20px"
+                bg={"#262626"}
+                px="20px"
+                pt="10px"
+                direction="column"
+                h="fit-content"
+            >
+                <Text my={1} fontSize={18} fontWeight="bold" color={"white"}>
+                    My Profile
+                </Text>
+                <Image src={user.background_image ? user.background_image : 'https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'} maxW="100%" h={"100px"} borderRadius="20px" />
+                <Flex w="full">
+                    <Flex flexDirection="column" mb="30px" w="full" px={4}>
+                        <Image
+                            src={user.photo_profile}
+                            border="5px solid red"
+                            borderColor={"#262626"}
+                            width="68px"
+                            height="68px"
+                            mt="-38px"
+                            borderRadius="50%"
+                        />
+                    </Flex>
+                    <Link to={`/profile`}>
+                        <Button
+                            fontSize="13px"
+                            fontWeight="bold"
+                            bg="transparent"
+                            border="1px"
+                            my="5px"
+                            h="30px"
+                            rounded="16px"
+                        >
+                            <Text color={"white"}>
+                                Edit Profile
+                            </Text>
+                        </Button>
+                    </Link>
                 </Flex>
-                <Stack spacing='0.5' marginTop={"-10"}>
-                    <Button
-                        backgroundColor="#1d1d1d"
-                        border={'2px solid white'}
-                        borderRadius={"10px"}
-                        height={"20px"}
-                        bottom={"0"}
-                        ml="auto"
-                    >
-                        <Text fontSize={"10px"} color={"white"}>Edit Profile</Text>
-                    </Button>
-                    <Text color={"white"} fontSize={"xl"} fontWeight={"bold"}>{user.data.full_name}</Text>
-                    <Text color={"#606060"}>@{user.data.username}</Text>
-                    <Text color={"white"}>{user.data.description}</Text>
-                    <Flex>
-                        <Flex gap={3}>
-                            <Flex gap={0.5}>
-                                <Text color={"white"}>{user.data.following_count}</Text>
-                                <Text color={"#606060"}>Following</Text>
-                            </Flex>
-                            <Flex gap={0.5}>
-                                <Text color={"white"}>{user.data.followers_count}</Text>
-                                <Text color={"#606060"}>Follower</Text>
-                            </Flex>
+                <Box mt={-7} mb={5}>
+                    <Text fontWeight="600" color={"white"} fontSize="xl">
+                        {user.full_name}
+                    </Text>
+                    <Text color="gray">@{user.username}</Text>
+                    <Text color={"white"}>{user.description}</Text>
+                    <Flex gap={4} alignItems="center">
+                        <Flex alignItems="center" gap="2px">
+                            <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
+                                {user.following_count ? user.following_count : 0}
+                            </Text>
+                            <Text fontSize="14px" color={"#606060"}>
+                                Following
+                            </Text>
+                        </Flex>
+
+                        <Flex alignItems="center" gap="2px">
+                            <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
+                                {user.followers_count ? user.followers_count : 0}
+                            </Text>
+                            <Text fontSize="14px" color={"#606060"}>
+                                Follower
+                            </Text>
                         </Flex>
                     </Flex>
-                </Stack>
-            </CardBody>
-        </Card >
-    )
-}
+                </Box>
+            </Flex>
+        </Card>
+    );
+};
 
-export default MyProfile
+export default MyProfile;

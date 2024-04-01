@@ -4,6 +4,7 @@ export interface IUser {
     full_name?: string;
     email?: string;
     photo_profile?: string | undefined;
+    background_image?: string | undefined;
     description?: string;
     followers_count?: number;
     following_count?: number;
@@ -15,6 +16,7 @@ export interface IUserSugested {
     full_name?: string;
     email?: string;
     photo_profile?: string | undefined;
+    background_image?: string | undefined;
     description?: string;
     is_followed?: boolean;
 }
@@ -25,6 +27,7 @@ export interface IUserSearchResult {
     full_name?: string;
     email?: string;
     photo_profile?: string | undefined;
+    background_image?: string | undefined;
     description?: string;
     followers_count?: number;
     following_count?: number;
@@ -35,6 +38,14 @@ export interface IUserUpdate {
     full_name?: string;
     description?: string;
     photo_profile?: Blob | MediaSource | string;
+}
+
+export interface IUserPPUpdate {
+    photo_profile?: Blob | MediaSource | string;
+}
+
+export interface IUserBackgroundUpdate {
+    background_image?: Blob | MediaSource | string;
 }
 
 export interface IUserRegister {

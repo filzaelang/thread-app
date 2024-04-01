@@ -27,7 +27,36 @@ export default new class UserController {
 
     async update(req: Request, res: Response) {
         try {
-            UserQueue.update(req, res)
+            const loginSession = res.locals.loginSession
+            const reqBody = req.body
+            const file = req.file
+            const fileName = res.locals.filename
+            const response = await UserServices.update(reqBody, loginSession, file, fileName)
+            return res.status(200).json(response)
+        } catch (error) {
+            return res.status(500).json({ error: error.message })
+        }
+    }
+
+    async updatePhotoProfile(req: Request, res: Response) {
+        try {
+            const loginSession = res.locals.loginSession
+            const file = req.file
+            const fileName = res.locals.filename
+            const response = await UserServices.updatePhotoProfile(loginSession, file, fileName)
+            return res.status(200).json(response)
+        } catch (error) {
+            return res.status(500).json({ error: error.message })
+        }
+    }
+
+    async updateBackgoundImage(req: Request, res: Response) {
+        try {
+            const loginSession = res.locals.loginSession
+            const file = req.file
+            const fileName = res.locals.filename
+            const response = await UserServices.updateBackgroundProfile(loginSession, file, fileName)
+            return res.status(200).json(response)
         } catch (error) {
             return res.status(500).json({ error: error.message })
         }

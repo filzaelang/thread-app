@@ -26,7 +26,7 @@ function ProfileOthers() {
                             width={"100%"}
                             height={"200px"}
                             objectFit={"cover"}
-                            src='https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'
+                            src={user?.background_image ? user?.background_image : 'https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'}
                         />
                         <Avatar
                             size={"lg"}

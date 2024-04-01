@@ -16,7 +16,7 @@ export default function EditProfile() {
                             id='username'
                             type="text"
                             name="username"
-                            value={user.data.username}
+                            value={user.username}
                             color={"white"}
                             readOnly
                         />
@@ -38,7 +38,7 @@ export default function EditProfile() {
                             color={"white"}
                             onChange={handleChange}
                         />
-                        <FormLabel color={"white"}>Change Photo Profile</FormLabel>
+                        {/* <FormLabel color={"white"}>Change Photo Profile</FormLabel>
                         <Input
                             id='photo_profile'
                             name="photo_profile"
@@ -47,7 +47,7 @@ export default function EditProfile() {
                             style={{ width: '160px', fontSize: '22px' }}
                             onChange={handleChange}
                             ref={fileInputRef}
-                        />
+                        /> */}
                         <Button
                             colorScheme="orange"
                             padding="20px"

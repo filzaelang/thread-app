@@ -14,7 +14,7 @@ export default function useFollow() {
     async function getFollow() {
         try {
             const response = await API.get(`/follows?type=${followState}`)
-            // console.log(response.data)
+            console.log(response.data)
             dispatch(GET_FOLLOWS(response.data))
         } catch (error) {
             console.error("Error searching users:", error);

@@ -4,6 +4,7 @@ import { GET_THREADS, SET_THREADS_LIKES } from "../../../store/rootReducer";
 import { API, setAuthTokenLogin } from "../../../libs/api";
 import { useEffect, useState, ChangeEvent, FormEvent, useRef } from "react"
 import { IThreadPost } from "../../../interface/ThreadInterface";
+import { toast } from "react-toastify";
 
 
 export function useThreads() {
@@ -45,6 +46,7 @@ export function useThreads() {
         try {
             const response = await API.post("/thread", formData);
             console.log("Success post thread :", response);
+            toast.success("Success posting a thread")
             getThreads();
         } catch (error) {
             console.error("Error posting thread:", error);

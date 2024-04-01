@@ -18,6 +18,8 @@ router.get("/auth/check", AuthMiddleware.Auth, AuthController.check)
 // User
 router.post("/user", AuthMiddleware.Auth, UserController.find)
 router.patch("/user/detail", AuthMiddleware.Auth, UploadFile.upload("photo_profile"), UserController.update)
+router.patch("/user/detail/photo-profile", AuthMiddleware.Auth, UploadFile.upload("photo_profile"), UserController.updatePhotoProfile)
+router.patch("/user/detail/backgound-image", AuthMiddleware.Auth, UploadFile.upload("background_image"), UserController.updateBackgoundImage)
 router.get("/user/detail/:id", AuthMiddleware.Auth, UserController.findOne)
 router.get("/user/sugestedAccount", AuthMiddleware.Auth, UserController.sugestedAccount)
 router.get("/user", AuthMiddleware.Auth, UserController.getAll)
@@ -54,18 +56,17 @@ router.get("/notification", (req: express.Request, res: express.Response) => {
     res.setHeader("Connection", "keep-alive")
 
     res.write("event: message\n")
+})
+
+router.get("/new-thread", (req, res) => {
     function sendNotification(data: any) {
         res.write("Data : " + data + "\n\n")
     }
 
+    const thread = JSON.stringify({ data: "New Thread!" })
+    sendNotification(thread)
 
-    router.get("/new-thread", (req, res) => {
-        const thread = JSON.stringify({ data: "New Thread!" })
-        sendNotification(thread)
-
-        res.sendStatus(200)
-    })
-
+    res.sendStatus(200)
 })
 
 

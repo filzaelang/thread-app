@@ -2,15 +2,19 @@ import { IUserRegister } from "../../../interface/UserInterface"
 import { useState, ChangeEvent } from "react"
 import axios, { AxiosError } from "axios"
 import { API } from "../../../libs/api"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
 
 
 export function useRegister() {
+    const navigate = useNavigate()
     const [data, setData] = useState<IUserRegister>({
         full_name: "",
         username: "",
         email: "",
         password: ""
     })
+
 
     async function handleChange(event: ChangeEvent<HTMLInputElement>) {
         setData({
@@ -23,15 +27,16 @@ export function useRegister() {
         try {
             const response = await API.post("/auth/register", data)
             console.log(response)
-            alert(response.data.message)
+            toast.success("Register success !")
+            navigate("/login")
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<{ error: string }>;
                 const errorMessage = axiosError.response?.data?.error;
-                alert(errorMessage)
+                toast.error(errorMessage)
                 throw axiosError;
             } else {
-                alert("An unexpected error occurred");
+                toast.error("An unexpected error occurred");
                 throw error;
             }
         }

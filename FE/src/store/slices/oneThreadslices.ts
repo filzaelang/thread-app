@@ -21,7 +21,7 @@ export const oneThreadsSlice = createSlice({
     initialState: initialOneThread,
     reducers: {
         GET_ONE_THREAD: (state, action) => {
-            const payload = action.payload.data
+            const payload = action.payload
 
             const oneThread: IThreadCard = {
                 id: payload.id,

@@ -39,32 +39,32 @@ export default new class RepliesController {
 
     async create(req: Request, res: Response) {
         try {
-            // const loginSession = res.locals.loginSession;
+            const loginSession = res.locals.loginSession;
 
-            // const data = {
-            //     content: req.body.content ? req.body.content : null,
-            //     image: req.file ? res.locals.filename : null,
-            //     thread_id: parseInt(req.body.thread_id),
-            // }
+            const data = {
+                content: req.body.content ? req.body.content : null,
+                image: req.file ? res.locals.filename : null,
+                thread_id: parseInt(req.body.thread_id),
+            }
 
-            // const { error, value } = createReplyValidation.validate(data);
-            // if (error) return res.status(400).json(error);
+            const { error, value } = createReplyValidation.validate(data);
+            if (error) return res.status(400).json(error);
 
-            // if (req.file) {
-            //     cloudinary.upload();
-            //     const cloudinaryRes = await cloudinary.destination(value.image)
-            //     value.image = cloudinaryRes.secure_url
-            // }
+            if (req.file) {
+                cloudinary.upload();
+                const cloudinaryRes = await cloudinary.destination(value.image)
+                value.image = cloudinaryRes.secure_url
+            }
 
-            // const obj = {
-            //     ...value,
-            //     created_by: loginSession.obj.id,
-            //     updated_by: loginSession.obj.id
-            // };
+            const obj = {
+                ...value,
+                user_id: loginSession.obj.id,
+                created_by: loginSession.obj.id,
+                updated_by: loginSession.obj.id
+            };
 
-            // const response = await ReplieServices.create(obj);
-            // return res.status(200).json(response);
-            ReplyQueue.create(req, res)
+            const response = await ReplieServices.create(obj);
+            return res.status(200).json(response);
         } catch (error) {
             return res
                 .status(500)

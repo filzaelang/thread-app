@@ -2,12 +2,15 @@ import { Box, Flex, Divider, Avatar, Text, Image } from '@chakra-ui/react'
 import { Grid, GridItem, FormControl, Input, Button } from '@chakra-ui/react';
 import { useDetailThreads } from '../feature/Thread/hooks/useDetailThreads';
 import { IReply } from '../interface/ReplyInterface';
+import { RootState } from '../store/types/rootStates';
+import { useSelector } from 'react-redux'
 
 //icon
 import { BiMessageAltDetail } from "react-icons/bi";
 import { FaHeart } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import { TbPointFilled } from "react-icons/tb";
+import { useEffect, useState } from 'react';
 
 export default function ThreadDetail() {
     const {
@@ -19,6 +22,13 @@ export default function ThreadDetail() {
         replies, isLiked,
         handleNavigate
     } = useDetailThreads()
+
+    const [randomNumber, setRandomNumber] = useState<number>(0);
+    const user = useSelector((state: RootState) => state.auth)
+
+    useEffect(() => {
+        setRandomNumber(Math.floor(Math.random() * 100));
+    }, []);
 
     return (
         <Flex flexDirection={"column"} wrap={"wrap"}>
@@ -72,7 +82,7 @@ export default function ThreadDetail() {
                 <GridItem colSpan={{ base: 1, lg: 1, xl: 1 }} padding="0" position="relative" zIndex={1}>
                     <Avatar
                         size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                        src={''}
+                        src={user.data.photo_profile ? user.data.photo_profile : ''}
                     />
                 </GridItem>
 
@@ -134,7 +144,7 @@ export default function ThreadDetail() {
                         {/* image */}
                         <Avatar
                             size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                            src={''}
+                            src={data.created_by?.photo_profile}
                         />
                         {/* Thread */}
                         <Flex flexDirection={"column"}>
@@ -152,7 +162,7 @@ export default function ThreadDetail() {
                                 >
                                     <FaHeart color={isLiked ? "red" : "grey"} />
                                 </Text>
-                                <Text color="#606060" fontSize={"14px"}>30</Text>
+                                <Text color="#606060" fontSize={"14px"}>{randomNumber}</Text>
                             </Flex>
                         </Flex>
                     </Flex>

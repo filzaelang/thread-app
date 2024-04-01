@@ -5,8 +5,11 @@ import { Thread } from "../entity/Thread"
 import { AppDataSource } from "../data-source"
 import { EventEmitter } from "stream"
 import { request } from "http";
+import * as express from "express";
 
-export default new class ThreadWorker {
+const router = express.Router();
+
+export default new class ThreadWorker extends EventEmitter {
     private readonly ThreadWorker: Repository<Thread> = AppDataSource.getRepository(Thread)
 
     async create(queueName: string, connection: amqp.Connection) {
@@ -17,9 +20,9 @@ export default new class ThreadWorker {
                 try {
                     const data = JSON.parse(message.content.toString())
                     // console.log(data)
-
+                    let obj;
                     if (data.image === null) {
-                        const obj = this.ThreadWorker.create({
+                        obj = this.ThreadWorker.create({
                             content: data.content,
                             image: data.image,
                             created_by: {
@@ -32,26 +35,9 @@ export default new class ThreadWorker {
                             updated_at: data.updated_at,
                         })
 
-                        await this.ThreadWorker.save(obj)
-
-                        // const req = request({
-                        //     hostname: "localhost",
-                        //     port: 5000,
-                        //     path: "/api/v1/notification",
-                        //     method: "GET"
-                        // })
-
-                        // req.on("error", (error) => console.log("Error Message : " + error))
-
-                        // req.end();
-
-                        console.log("Thread is Created !")
-
-                        channel.ack(message)
                     } else {
                         const cloudinaryConfig = await cloudinary.destination(data.image)
-
-                        const obj = this.ThreadWorker.create({
+                        obj = this.ThreadWorker.create({
                             content: data.content,
                             image: cloudinaryConfig.secure_url,
                             created_by: {
@@ -63,24 +49,15 @@ export default new class ThreadWorker {
                             },
                             updated_at: data.updated_at,
                         })
-
-                        await this.ThreadWorker.save(obj)
-
-                        // const req = request({
-                        //     hostname: "localhost",
-                        //     port: 5000,
-                        //     path: "/api/v1/notification",
-                        //     method: "GET"
-                        // })
-
-                        // req.on("error", (error) => console.log("Error Message : " + error))
-
-                        // req.end();
-
-                        console.log("Thread is Created !")
-
-                        channel.ack(message)
                     }
+                    await this.ThreadWorker.save(obj)
+
+                    // Send SSE notification
+                    // const sseData = JSON.stringify({ data: "New Thread!" });
+                    // sendSSENotification(sseData);
+
+                    console.log("Thread is Created !")
+                    channel.ack(message)
                 } catch (error) {
                     console.log(error)
                 }
@@ -89,4 +66,11 @@ export default new class ThreadWorker {
             console.log({ message: error })
         }
     }
+}
+
+function sendSSENotification(data: any) {
+    // Broadcast SSE notification to all connected clients
+    router.get("/notification", (req: express.Request, res: express.Response) => {
+        res.write("data: " + data + "\n\n");
+    });
 }

@@ -3,20 +3,20 @@ import { setAuthTokenLogin, API } from '../../../libs/api'
 import { RootState } from "../../../store/types/rootStates"
 import { useSelector, useDispatch } from "react-redux"
 import { IUserUpdate } from "../../../interface/UserInterface"
-import { AUTH_UPDATE } from "../../../store/rootReducer"
+import { AUTH_UPDATE, GET_THREADS } from "../../../store/rootReducer"
+import { toast } from "react-toastify"
 
 export function useEditProfile() {
 
-    const user = useSelector((state: RootState) => state.auth)
+    const user = useSelector((state: RootState) => state.auth.data)
     const dispatch = useDispatch()
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     setAuthTokenLogin(localStorage.token)
 
     const [form, setForm] = useState<IUserUpdate>({
-        full_name: user.data.full_name,
-        description: user.data.description,
-        photo_profile: '',
+        full_name: user.full_name,
+        description: user.description,
     })
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -41,7 +41,6 @@ export function useEditProfile() {
         const formData = new FormData()
         formData.append("full_name", form.full_name || '')
         formData.append("description", form.description || '')
-        formData.append("photo_profile", form.photo_profile as File)
 
         console.log("data", form)
         console.log("formData", formData)
@@ -50,6 +49,9 @@ export function useEditProfile() {
             const response = await API.patch("/user/detail", formData);
             console.log("Success edit profile :", response);
             dispatch(AUTH_UPDATE(form))
+            const refreshThreadsUser = await API.get(`/thread/user`)
+            dispatch(GET_THREADS(refreshThreadsUser.data))
+            toast.success("Profile updated !")
         } catch (error) {
             console.error("Error posting thread:", error);
         }
@@ -61,6 +63,6 @@ export function useEditProfile() {
     }, [dispatch])
 
     return {
-        handleUpdateUser, handleChange, fileInputRef, form, user
+        handleUpdateUser, handleChange, fileInputRef, form, user, dispatch
     }
 }

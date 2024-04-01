@@ -3,11 +3,15 @@ import { API } from '../../../libs/api'
 import { GET_SUGESTED_ACCOUNT, SET_FOLLOWING_COUNT, SET_FOLLOW_FOLLOW } from '../../../store/rootReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../../store/types/rootStates'
+import { AUTH_LOGOUT } from '../../../store/rootReducer'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export function useSugestedAccount() {
 
     const sugestedAccount = useSelector((state: RootState) => state.user.data)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     async function getSugestedAccount() {
         try {
@@ -16,6 +20,8 @@ export function useSugestedAccount() {
             dispatch(GET_SUGESTED_ACCOUNT(response.data))
         } catch (error) {
             console.error("Error getting sugestion error:", error)
+            dispatch(AUTH_LOGOUT());
+            navigate("/login")
         }
     }
 
@@ -40,6 +46,21 @@ export function useSugestedAccount() {
     useEffect(() => {
         getSugestedAccount()
     }, [useSugestedAccount, handleFollow])
+
+    useEffect(() => {
+        // Lakukan pemantauan terhadap respons dari setiap request ke server
+        axios.interceptors.response.use(response => {
+            return response;
+        }, error => {
+            if (error.response.status === 401) {
+                // Token invalid, lakukan logout otomatis
+                dispatch(AUTH_LOGOUT());
+                // Redirect ke halaman login
+                navigate("/login")
+            }
+            return Promise.reject(error);
+        });
+    }, []);
 
     return {
         sugestedAccount, handleFollow

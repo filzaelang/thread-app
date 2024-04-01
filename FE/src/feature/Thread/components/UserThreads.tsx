@@ -2,6 +2,7 @@ import { Text, Image, Flex, Divider, Box, Avatar } from '@chakra-ui/react'
 import { IThreadCard } from '../../../interface/ThreadInterface';
 import { useThreads } from '../hooks/useThreads';
 import { useUserThreads } from '../hooks/useUserThreads';
+import { useOtherUserThreads } from '../hooks/useOtherUserThreads';
 
 //icon
 import { TbPointFilled } from "react-icons/tb";
@@ -64,7 +65,7 @@ export function UserThreads() {
 
 export function OtherUserThreads() {
     const { updateLikesCount } = useThreads()
-    const { otherUserThreads } = useUserThreads()
+    const { otherUserThreads } = useOtherUserThreads()
     const navigate = useNavigate()
 
     return (
