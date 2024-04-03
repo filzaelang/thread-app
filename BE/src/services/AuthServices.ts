@@ -108,6 +108,7 @@ export default new class AuthServices {
                     full_name: check.full_name,
                     email: check.email,
                     photo_profile: check.photo_profile,
+                    background_image: check.background_image,
                     description: check.description,
                     followers_count: check.following.length,
                     following_count: check.follower.length

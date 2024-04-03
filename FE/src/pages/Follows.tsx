@@ -12,10 +12,10 @@ function Follows() {
             <Flex ms={"10px"} me={"10px"}>
                 <Heading as={"h1"} color={"white"} mb={"20px"}>Follow</Heading>
             </Flex>
-            <Tabs isFitted>
+            <Tabs isFitted variant='unstyled' defaultIndex={0} ms={"10px"} me={"10px"}>
                 <TabList>
-                    <Tab color={"white"} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>Followers</Tab>
-                    <Tab color={"white"} onClick={() => dispatch(SET_FOLLOW_STATE("followings"))}>Following</Tab>
+                    <Tab color={"white"} _selected={{ color: 'white', bg: '#262626' }} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>Followers</Tab>
+                    <Tab color={"white"} _selected={{ color: 'white', bg: '#262626' }} onClick={() => dispatch(SET_FOLLOW_STATE("followings"))}>Following</Tab>
                 </TabList>
 
                 <TabPanels>

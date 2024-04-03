@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { useState, useEffect } from 'react';
 
@@ -78,10 +77,9 @@ function RootLayout({ children }: { children: React.ReactNode }) {
                     <GridItem
                         as="aside"
                         colSpan={{ base: 12, lg: 2, xl: 2 }}
-                        bg="#1d1d1d"
+                        bg={"#262626"}
                         paddingTop={"30px"}
                         minHeight={{ lg: '100vh' }}
-                        borderRight={{ lg: "2px solid white" }}
                         display={{ base: "block", lg: "block", xl: "block" }}
                     >
                         <Navbar />
@@ -116,7 +114,6 @@ function RootLayout({ children }: { children: React.ReactNode }) {
                 colSpan={{ base: 12, lg: 3, xl: 3 }}
                 bg="#1d1d1d"
                 paddingTop={"40px"}
-                borderLeft={{ lg: "2px solid white" }}
                 zIndex={3}
                 display={{ base: "none", lg: "block", xl: "block" }} // Menampilkan right bar hanya di lg dan xl
             >

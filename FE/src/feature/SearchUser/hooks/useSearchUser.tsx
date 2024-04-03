@@ -1,26 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { setAuthTokenLogin } from '../../../libs/api';
 import { API } from '../../../libs/api';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux"
-import { RootState } from '../../../store/types/rootStates';
-import { GET_ALL_USERS } from '../../../store/rootReducer';
+import { useDispatch } from 'react-redux';
+import { SET_FOLLOWING_COUNT } from '../../../store/rootReducer';
 
 export default function useSearchUser() {
 
     const [searchQuery, setSearchQuery] = useState<any>("");
     const [searchResults, setSearchResults] = useState<any>([]);
-    // const [users, setUsers] = useState<any>([]);
     const navigate = useNavigate();
-    // const auth = useSelector((state: RootState) => state.auth)
-    // const user = useSelector((state: RootState) => state.user.data)
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch();
     setAuthTokenLogin(localStorage.token);
-
-    // async function getUser() {
-    //     const response = await API.get(`/user`)
-    //     dispatch(GET_ALL_USERS(response.data))
-    // }
 
     const handleChange = (e: any) => {
         const query = e.target.value;
@@ -50,9 +41,9 @@ export default function useSearchUser() {
 
     async function handleFollow(id: number | undefined, isFollowed: boolean | undefined) {
         try {
-            console.log(id, isFollowed);
             if (isFollowed === false) {
                 await API.post("/follow", { following_id: id });
+                dispatch(SET_FOLLOWING_COUNT({ is_followed: isFollowed }))
                 const updatedResults = searchResults.map((result: any) => {
                     if (result.id === id) {
                         return { ...result, is_followed: true };
@@ -62,6 +53,7 @@ export default function useSearchUser() {
                 setSearchResults(updatedResults);
             } else if (isFollowed === true) {
                 await API.delete(`/follow/${id}`);
+                dispatch(SET_FOLLOWING_COUNT({ is_followed: isFollowed }))
                 const updatedResults = searchResults.map((result: any) => {
                     if (result.id === id) {
                         return { ...result, is_followed: false };

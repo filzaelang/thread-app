@@ -23,16 +23,19 @@ import { UserThreads } from "../feature/Thread/components/UserThreads"
 import { useSelector } from "react-redux"
 import { RootState } from "../store/types/rootStates"
 import { useEditPP } from "../feature/UserProfile/hooks/useEditPP"
+import { useEditBg } from "../feature/UserProfile/hooks/useEditBg"
 
 
 function Profile() {
     const user = useSelector((state: RootState) => state.auth.data)
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen: isProfileOpen, onOpen: onProfileOpen, onClose: onProfileClose } = useDisclosure();
+    // const { isOpen: isBgOpen, onOpen: onBgOpen, onClose: onBgClose } = useDisclosure();
     const { fileInputRef, handleChange, handleUpdatePP } = useEditPP()
+    // const { fileBgInputRef, handleBgChange, handleUpdateBg } = useEditBg()
 
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isProfileOpen} onClose={onProfileClose}>
                 <ModalOverlay />
                 <ModalContent bg={"#262626"}>
                     <ModalHeader color={"white"}>Change Profile Picture</ModalHeader>
@@ -50,16 +53,44 @@ function Profile() {
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme='whiteAlpha' variant='outline' mr={3} onClick={onClose}>
+                            <Button colorScheme='whiteAlpha' variant='outline' mr={3} onClick={onProfileClose}>
                                 Close
                             </Button>
-                            <Button colorScheme="teal" variant='solid' type='submit' onClick={onClose}>
+                            <Button colorScheme="teal" variant='solid' type='submit' onClick={onProfileClose}>
                                 Submit
                             </Button>
                         </ModalFooter>
                     </form>
                 </ModalContent>
             </Modal>
+            {/* <Modal isOpen={isBgOpen} onClose={onBgClose}>
+                <ModalOverlay />
+                <ModalContent bg={"#262626"}>
+                    <ModalHeader color={"white"}>Change Background Picture</ModalHeader>
+                    <ModalCloseButton color={"white"} />
+                    <form onSubmit={handleUpdateBg} encType="multipart/form-data">
+                        <ModalBody>
+                            <Input
+                                id="background_image"
+                                name='background_image'
+                                type="file"
+                                accept="image/*"
+                                color={"white"}
+                                onChange={handleBgChange}
+                                ref={fileBgInputRef}
+                            />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme='whiteAlpha' variant='outline' mr={3} onClick={onBgClose}>
+                                Close
+                            </Button>
+                            <Button colorScheme="teal" variant='solid' type='submit' onClick={onBgClose}>
+                                Submit
+                            </Button>
+                        </ModalFooter>
+                    </form>
+                </ModalContent>
+            </Modal> */}
 
             <Card my={2} bg={"#262626"} borderRadius={"10px"} ms={"10px"} me={"10px"}>
                 <Flex
@@ -74,10 +105,11 @@ function Profile() {
                         My Profile
                     </Text>
                     <Image
-                        src={user.background_image ? user.background_image : 'https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'}
+                        src={'https://img.freepik.com/free-vector/gradient-black-background-with-golden-textures_52683-76746.jpg?t=st=1712107484~exp=1712111084~hmac=777ecbf26f7d86001ca4a1b93e829fbc896dedf226ab878064a0d197d9494975&w=826'}
                         maxW="100%"
                         h={"200px"}
                         borderRadius="20px"
+                    // onClick={onBgOpen}
                     />
                     <Flex w="full">
                         <Flex flexDirection="column" ms={"20px"} mb="30px" w="full" px={4} className="photo-profile">
@@ -89,7 +121,7 @@ function Profile() {
                                 height="100px"
                                 mt="-50px"
                                 borderRadius="50%"
-                                onClick={onOpen}
+                                onClick={onProfileOpen}
                                 sx={{
                                     '.photo-profile:hover &': {
                                         filter: 'blur(8px)',
@@ -105,7 +137,7 @@ function Profile() {
                         <Text color="gray">@{user.username}</Text>
                         <Text color={"white"}>{user.description}</Text>
                         <Flex gap={4} alignItems="center">
-                            <Flex alignItems="center" gap="2px">
+                            <Flex alignItems="center" gap={1}>
                                 <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
                                     {user.following_count ? user.following_count : 0}
                                 </Text>
@@ -114,7 +146,7 @@ function Profile() {
                                 </Text>
                             </Flex>
 
-                            <Flex alignItems="center" gap="2px">
+                            <Flex alignItems="center" gap={1}>
                                 <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
                                     {user.followers_count ? user.followers_count : 0}
                                 </Text>
@@ -126,14 +158,14 @@ function Profile() {
                     </Box>
                 </Flex>
             </Card >
-            <Tabs isFitted variant='enclosed' mt={"10px"}>
+            <Tabs isFitted variant='unstyled' m={"10px"} defaultIndex={0}>
                 <TabList>
-                    <Tab color={"white"}>Threads</Tab>
-                    <Tab color={"white"}>Edit Profile</Tab>
+                    <Tab _selected={{ color: 'white', bg: '#262626' }} color={"white"}>Threads</Tab>
+                    <Tab _selected={{ color: 'white', bg: '#262626' }} color={"white"}>Edit Profile</Tab>
                 </TabList>
 
                 <TabPanels>
-                    <TabPanel onClick={() => window.location.reload()}>
+                    <TabPanel>
                         <UserThreads />
                     </TabPanel>
                     <TabPanel>

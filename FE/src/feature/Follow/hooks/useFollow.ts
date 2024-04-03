@@ -21,7 +21,7 @@ export default function useFollow() {
         }
     }
 
-    async function handleFollow(id: number | undefined, user_id: number | undefined, is_followed: boolean | undefined) {
+    async function handleFollow(user_id: number | undefined, is_followed: boolean | undefined) {
         try {
             if (is_followed == false) {
                 await API.post("/follow", { following_id: user_id })

@@ -11,7 +11,6 @@ export function useThreads() {
     const dispatch = useDispatch();
     const threads = useSelector((state: RootState) => state.threads)
     setAuthTokenLogin(localStorage.token)
-    // const [oneThread, setOneThread] = useState<IThreadPost>()
 
     const [data, setData] = useState<IThreadPost>({
         content: "",
@@ -84,3 +83,4 @@ export function useThreads() {
         updateLikesCount, handleChange, handlePostThread, threads, fileInputRef,
     }
 }
+

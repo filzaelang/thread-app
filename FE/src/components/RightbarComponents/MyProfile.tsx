@@ -9,7 +9,6 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/types/rootStates";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
     const user = useSelector((state: RootState) => state.auth.data)
@@ -27,7 +26,7 @@ const MyProfile = () => {
                 <Text my={1} fontSize={18} fontWeight="bold" color={"white"}>
                     My Profile
                 </Text>
-                <Image src={user.background_image ? user.background_image : 'https://img.freepik.com/free-photo/psychedelic-paper-shapes-with-copy-space_23-2149378246.jpg?w=900&t=st=1707182435~exp=1707183035~hmac=b0a570c2efd11753a18424e5a952eccdfbcaec5db7781bd5600c3bb1b88f3e1c'} maxW="100%" h={"100px"} borderRadius="20px" />
+                <Image src={'https://img.freepik.com/free-vector/gradient-black-background-with-golden-textures_52683-76746.jpg?t=st=1712107484~exp=1712111084~hmac=777ecbf26f7d86001ca4a1b93e829fbc896dedf226ab878064a0d197d9494975&w=826'} maxW="100%" h={"100px"} borderRadius="20px" />
                 <Flex w="full">
                     <Flex flexDirection="column" mb="30px" w="full" px={4}>
                         <Image
@@ -63,7 +62,7 @@ const MyProfile = () => {
                     <Text color="gray">@{user.username}</Text>
                     <Text color={"white"}>{user.description}</Text>
                     <Flex gap={4} alignItems="center">
-                        <Flex alignItems="center" gap="2px">
+                        <Flex alignItems="center" gap={1}>
                             <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
                                 {user.following_count ? user.following_count : 0}
                             </Text>
@@ -72,7 +71,7 @@ const MyProfile = () => {
                             </Text>
                         </Flex>
 
-                        <Flex alignItems="center" gap="2px">
+                        <Flex alignItems="center" gap={1}>
                             <Text fontWeight="bold" fontSize={"15px"} color={"white"}>
                                 {user.followers_count ? user.followers_count : 0}
                             </Text>

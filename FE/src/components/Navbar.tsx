@@ -2,6 +2,7 @@ import { Heading, Spacer, Text, Button, Flex, Box, useBreakpointValue, Container
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AUTH_LOGOUT } from "../store/rootReducer";
 import { useDispatch } from "react-redux";
+import { SET_FOLLOW_STATE } from "../store/rootReducer";
 
 // icons
 import { RiHome7Line } from "react-icons/ri";
@@ -44,7 +45,7 @@ function Navbar() {
                 </Heading>
                 {/* ListItem Home */}
                 <NavLink to="/" style={isItemActive("/") ? activeItemStyles : navItemStyles}>
-                    <Flex flexDirection={"row"} gap={3}>
+                    <Flex flexDirection={"row"} gap={3} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                         <RiHome7Line fontSize={"25px"} style={isItemActive("/") ? activeItemStyles : navItemStyles} />
                         <Text fontSize="md" display={{ base: "none", md: "none", lg: "block", xl: "block" }}>Home</Text>
                     </Flex>
@@ -52,7 +53,7 @@ function Navbar() {
 
                 {/* ListItem Search */}
                 <NavLink to="/search" style={isItemActive("/search") ? { fontWeight: "bold" } : navItemStyles}>
-                    <Flex flexDirection={"row"} gap={3}>
+                    <Flex flexDirection={"row"} gap={3} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                         <MdOutlinePersonSearch fontSize={"25px"} style={isItemActive("/search") ? activeItemStyles : navItemStyles} />
                         <Text fontSize="md" display={{ base: "none", md: "none", lg: "block", xl: "block" }}>Search</Text>
                     </Flex>
@@ -60,7 +61,7 @@ function Navbar() {
 
                 {/* ListItem Follows */}
                 <NavLink to="/follows" style={isItemActive("/follows") ? { fontWeight: "bold" } : navItemStyles}>
-                    <Flex flexDirection={"row"} gap={3}>
+                    <Flex flexDirection={"row"} gap={3} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                         <FaRegHeart fontSize={"25px"} style={isItemActive("/follows") ? activeItemStyles : navItemStyles} />
                         <Text fontSize="md" display={{ base: "none", md: "none", lg: "block", xl: "block" }}>Follows</Text>
                     </Flex>
@@ -68,7 +69,7 @@ function Navbar() {
 
                 {/* ListItem Profile */}
                 <NavLink to="/profile" style={isItemActive("/profile") ? { fontWeight: "bold" } : navItemStyles}>
-                    <Flex flexDirection={"row"} gap={3}>
+                    <Flex flexDirection={"row"} gap={3} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                         <FaRegCircleUser fontSize={"25px"} style={isItemActive("/profile") ? activeItemStyles : navItemStyles} />
                         <Text fontSize="md" display={{ base: "none", md: "none", lg: "block", xl: "block" }}>Profile</Text>
                     </Flex>
@@ -76,7 +77,7 @@ function Navbar() {
 
                 {/* ListItem Create Post */}
                 <NavLink to="/create-post" style={isItemActive("/create-post") ? { fontWeight: "bold" } : navItemStyles}>
-                    <Flex flexDirection={"row"} gap={3} display={{ base: "block", md: "block", lg: "none", xl: "none" }}>
+                    <Flex flexDirection={"row"} gap={3} display={{ base: "block", md: "block", lg: "none", xl: "none" }} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                         <FaPlus
                             fontSize={"25px"} fontWeight={"bold"}
                             style={isItemActive("/create-post") ? activeItemStyles : navItemStyles}
@@ -84,7 +85,7 @@ function Navbar() {
                     </Flex>
                 </NavLink>
 
-                <Box display={{ base: "none", md: "none", lg: "block", xl: "block" }}>
+                <Box display={{ base: "none", md: "none", lg: "block", xl: "block" }} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                     <NavLink to="/create-post">
                         <Button
                             colorScheme="orange"
@@ -102,13 +103,13 @@ function Navbar() {
 
                 {/* ListItem Logout */}
                 <NavLink to="/login" onClick={handleLogout} style={isItemActive("/logout") ? { fontWeight: "bold" } : navItemStyles}>
-                    <Flex flexDirection={"row"} gap={3}>
+                    <Flex flexDirection={"row"} gap={3} onClick={() => dispatch(SET_FOLLOW_STATE("followers"))}>
                         <TbLogout2 fontSize={"25px"} style={isItemActive("/logout") ? activeItemStyles : navItemStyles} />
                         <Text fontSize="md" display={{ base: "none", md: "none", lg: "block", xl: "block" }}>Logout</Text>
                     </Flex>
                 </NavLink>
             </Flex >
-        </Container>
+        </Container >
     );
 }
 

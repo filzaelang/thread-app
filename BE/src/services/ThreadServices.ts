@@ -9,7 +9,6 @@ export default new class ThreadServices {
     private readonly ThreadRepository: Repository<Thread> = AppDataSource.getRepository(Thread);
     private readonly LikeRepository: Repository<Like> = AppDataSource.getRepository(Like);
 
-    //semenjak ada queue create jadi gk guna
     async create(data: Thread): Promise<object | string> {
         try {
             const response = this.ThreadRepository.save({

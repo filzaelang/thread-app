@@ -5,6 +5,7 @@ import { IFollow } from '../../../interface/FollowInterface'
 
 export function Follow() {
     const { follow, handleFollow } = useFollow()
+    console.log(follow)
 
     return (
         <>
@@ -21,7 +22,7 @@ export function Follow() {
                         <Text color={"white"}>{data.description}</Text>
                     </Flex>
                     <Spacer />
-                    <Button onClick={() => handleFollow(data.id, data.user_id, data.is_followed)}>{data.is_followed ? "Following" : "Follow"}</Button>
+                    <Button onClick={() => handleFollow(data.user_id, data.is_followed)}>{data.is_followed ? "Following" : "Follow"}</Button>
                 </Flex>
             ))}
         </>

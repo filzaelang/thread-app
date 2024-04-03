@@ -1,4 +1,4 @@
-import { Box, Flex, Divider, Avatar, Text, Image } from '@chakra-ui/react'
+import { Box, Flex, Divider, Avatar, Text, Image, Card } from '@chakra-ui/react'
 import { Grid, GridItem, FormControl, Input, Button } from '@chakra-ui/react';
 import { useDetailThreads } from '../feature/Thread/hooks/useDetailThreads';
 import { IReply } from '../interface/ReplyInterface';
@@ -32,53 +32,56 @@ export default function ThreadDetail() {
 
     return (
         <Flex flexDirection={"column"} wrap={"wrap"}>
-            <Box key={thread?.id} marginLeft={"10px"} marginRight={"10px"} width={"100%"}>
-                <Flex gap={3} mt={"10px"} mb={"10px"}>
-                    {/* image */}
-                    <Avatar
-                        size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                        src={thread?.created_by?.photo_profile}
-                    />
-                    {/* Thread */}
-                    <Flex flexDirection={"column"}>
-                        <Flex flexDirection={"column"} mb={"10px"}>
-                            <Text
-                                color="white"
-                                fontWeight="bold"
-                                fontSize={"14px"}
-                                onClick={() => handleNavigate(thread?.created_by?.id)}
-                            >
-                                {thread?.created_by?.full_name}
-                            </Text>
-                            <Text color="#606060" fontSize={"14px"}>@{thread?.created_by?.username}</Text>
-                            {/* <TbPointFilled color="#606060" fontSize={"14px"} />
-                        <Text color="#606060" fontSize={"14px"}>{oneThread.data.created_at}</Text> */}
-                        </Flex>
-                        <Text color={"white"}>{thread?.content}</Text>
-                        {thread?.image && <Image src={thread?.image} />}
-                        <Text color={"white"}>{thread?.created_at}</Text>
-                        <Flex gap={3}>
-                            <Flex gap={0.5} alignItems={"center"}>
+            <Box key={thread?.id} display="flex" justifyContent="center" width={"100%"}>
+                <Card my={2} bg={"#262626"} borderRadius={"10px"} width={"100%"} ms={"10px"} me={"10px"} padding={"10px"}>
+                    <Flex gap={3} mt={"10px"} mb={"10px"}>
+                        {/* image */}
+                        <Avatar
+                            size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
+                            src={thread?.created_by?.photo_profile}
+                        />
+                        {/* Thread */}
+                        <Flex flexDirection={"column"}>
+                            <Flex flexDirection={"column"} mb={"10px"}>
                                 <Text
-                                    onClick={() => updateLikesCount(thread?.id, thread?.is_liked)}
+                                    color="white"
+                                    fontWeight="bold"
+                                    fontSize={"14px"}
+                                    onClick={() => handleNavigate(thread?.created_by?.id)}
                                 >
-                                    <FaHeart color={thread?.is_liked ? "red" : "grey"} />
+                                    {thread?.created_by?.full_name}
                                 </Text>
-                                <Text color="#606060" fontSize={"14px"}>{thread?.number_of_likes}</Text>
+                                <Text color="#606060" fontSize={"14px"}>@{thread?.created_by?.username}</Text>
                             </Flex>
-                            <Flex gap={0.5} alignItems={"center"}>
-                                <BiMessageAltDetail color="#606060" />
-                                <Text color="#606060" fontSize={"14px"}>{thread?.number_of_replies}</Text>
-                                <Text color="#606060" fontSize={"14px"}>Replies</Text>
+                            <Text color={"white"}>{thread?.content}</Text>
+                            {thread?.image &&
+                                <Flex width={"90%"}>
+                                    <Image src={thread?.image} borderRadius={"10px"} />
+                                </Flex>
+                            }
+                            <Text color={"white"}>{thread?.created_at}</Text>
+                            <Flex gap={3}>
+                                <Flex gap={0.5} alignItems={"center"}>
+                                    <Text
+                                        onClick={() => updateLikesCount(thread?.id, thread?.is_liked)}
+                                    >
+                                        <FaHeart color={thread?.is_liked ? "red" : "grey"} />
+                                    </Text>
+                                    <Text color="#606060" fontSize={"14px"}>{thread?.number_of_likes}</Text>
+                                </Flex>
+                                <Flex gap={0.5} alignItems={"center"}>
+                                    <BiMessageAltDetail color="#606060" />
+                                    <Text color="#606060" fontSize={"14px"}>{thread?.number_of_replies}</Text>
+                                    <Text color="#606060" fontSize={"14px"}>Replies</Text>
+                                </Flex>
                             </Flex>
                         </Flex>
                     </Flex>
-                </Flex>
+                </Card>
             </Box>
-            <Divider />
+            <Divider ms={"10px"} />
             <Grid templateColumns="repeat(12, 1fr)" mt={'15px'} mb={"15px"} ms={"10px"} me={"10px"} alignItems={"center"}>
                 {/* image */}
-
                 <GridItem colSpan={{ base: 1, lg: 1, xl: 1 }} padding="0" position="relative" zIndex={1}>
                     <Avatar
                         size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
@@ -137,39 +140,43 @@ export default function ThreadDetail() {
                     </form>
                 </GridItem>
             </Grid >
-            <Divider />
+            <Divider ms={"10px"} />
             {replies?.map((data: IReply) => (
-                <Box key={data.id} ms={"10px"} me={"10px"}>
-                    <Flex gap={3} mt={"10px"} mb={"10px"}>
-                        {/* image */}
-                        <Avatar
-                            size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
-                            src={data.created_by?.photo_profile}
-                        />
-                        {/* Thread */}
-                        <Flex flexDirection={"column"}>
-                            <Flex alignItems={"center"} gap={1}>
-                                <Text color="white" fontWeight="bold" fontSize={"14px"}>{data.created_by?.full_name}</Text>
-                                <Text color="#606060" fontSize={"14px"}>@{data.created_by?.username}</Text>
-                                <TbPointFilled color="#606060" fontSize={"14px"} />
-                                <Text color="#606060" fontSize={"14px"}>{data.created_at}</Text>
-                            </Flex>
-                            <Text color={"white"}>{data.content}</Text>
-                            {data.image && <Image src={data.image} />}
-                            <Flex gap={3} alignItems={"center"}>
-                                <Text
-                                    onClick={() => updateLikesCount(data.id, isLiked)}
-                                >
-                                    <FaHeart color={isLiked ? "red" : "grey"} />
-                                </Text>
-                                <Text color="#606060" fontSize={"14px"}>{randomNumber}</Text>
+                <Box key={data.id} display="flex" justifyContent="center" width={"100%"}>
+                    <Card my={2} bg={"#262626"} borderRadius={"10px"} width={"100%"} ms={"10px"} me={"10px"} padding={"10px"}>
+                        <Flex gap={3}>
+                            {/* image */}
+                            <Avatar
+                                size={{ base: "sm", md: "md", lg: "md", xl: "md", xxl: "md" }}
+                                src={data.created_by?.photo_profile}
+                            />
+                            {/* Thread */}
+                            <Flex flexDirection={"column"}>
+                                <Flex alignItems={"center"} gap={1}>
+                                    <Text color="white" fontWeight="bold" fontSize={"14px"}>{data.created_by?.full_name}</Text>
+                                    <Text color="#606060" fontSize={"14px"}>@{data.created_by?.username}</Text>
+                                    <TbPointFilled color="#606060" fontSize={"14px"} />
+                                    <Text color="#606060" fontSize={"14px"}>{data.created_at}</Text>
+                                </Flex>
+                                <Text color={"white"}>{data.content}</Text>
+                                {data.image &&
+                                    <Flex width={"90%"}>
+                                        <Image src={data.image} borderRadius={"10px"} />
+                                    </Flex>
+                                }
+                                <Flex gap={3} alignItems={"center"}>
+                                    <Text
+                                        onClick={() => updateLikesCount(data.id, isLiked)}
+                                    >
+                                        <FaHeart color={isLiked ? "red" : "grey"} />
+                                    </Text>
+                                    <Text color="#606060" fontSize={"14px"}>{randomNumber}</Text>
+                                </Flex>
                             </Flex>
                         </Flex>
-                    </Flex>
-                    <Divider />
+                    </Card>
                 </Box>
-            ))
-            }
+            ))}
         </Flex>
     )
 }
